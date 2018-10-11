@@ -1,0 +1,100 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden; }
+
+h3 {
+  text-transform: uppercase;
+  font-weight: 100; }
+
+#mediaList {
+  width: 60vw;
+  height: 100vh;
+  margin: 10vh auto 10vh auto;
+  display: block; }
+
+#limheight {
+  height: 70vh;
+  /*your fixed height*/
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+  /*3 in those rules is just placeholder -- can be anything*/
+  -webkit-padding-start: 0; }
+
+li {
+  display: list-item;
+  list-style-position: inside;
+  padding-bottom: 4px;
+  font-size: 18px;
+  cursor: pointer; }
+
+#grid {
+  margin: 0 auto;
+  width: 90vw;
+  max-width: 1600px;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.5fr; }
+
+#noodles {
+  position: relative;
+  grid-column: 1/2;
+  height: 100%;
+  width: 100%; }
+
+#textContent {
+  margin: 10vh auto 0 0;
+  width: 80%; }
+
+h1 {
+  border-radius: 10px;
+  margin-bottom: 30px;
+  border: 1px solid black;
+  padding: 5px; }
+
+#persons {
+  margin: 10vh auto 0 auto; }
+
+#lead {
+  margin-bottom: 30px;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.5; }
+
+#descript {
+  line-height: 1.5; }
+
+span#highQaulityNews {
+  background-color: #bfbfbf !important; }
+
+span {
+  display: inline-block;
+  background-color: #ffdd19;
+  height: 10px; }
+
+img {
+  width: 40px; }
+
+p.personName {
+  -webkit-margin-before: 0;
+  margin-bottom: 30px; }
+
+canvas {
+  width: 100%;
+  height: 90%; }
+
+.rotate-text {
+  position: absolute;
+  width: 300px;
+  transform: rotate(-90deg);
+  float: left;
+  top: 5px;
+  left: 27px;
+  text-align: right;
+  font-size: 14px; }
+
+.rotate-text div {
+  margin-bottom: 36px; }
+
+/*# sourceMappingURL=styles.css.map */
