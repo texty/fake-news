@@ -12,7 +12,7 @@
         var points = num_points;
 
         // The distance between the points:
-        var length = 20;
+        var length = 12;
 
         var path = new Path({
             strokeColor: 'gold',

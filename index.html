@@ -91,6 +91,7 @@
         }
 
         d3.selectAll("li").on("click", function() {
+            $("body").css("overflow-y", "auto");
             var thisSite =  d3.select(this).text();
             drawPage(thisSite);
             drawNoodle();
@@ -185,7 +186,11 @@ if(personsArray[0].length > 2) {
     });
 
 $("#toList").on("click", function() {
-    $("#mediaList").css("display", "block")
+    $("#mediaList").css("display", "block");
+    $("#grid").css("display", "none");
+    window.scrollTo(0, 0);
+    $("body").css("overflow-y", "hidden");
+
 })
 </script>
 
