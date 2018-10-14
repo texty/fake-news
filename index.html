@@ -43,6 +43,7 @@
         </div>
 
         <button id="toList">До списку</button>
+        <button id="toNext">Гортати</button>
 
     </div>
 
@@ -73,7 +74,7 @@
         });
 
 
-
+        var thisSiteIndex;
         for(var i =0; i < siteArray.length; i++) {
             d3.select('#mediaList > ol')
                     .append("li")
@@ -82,6 +83,7 @@
                     })
                     .on("click", function() {
                         var thisSite =  d3.select(this).text();
+                        console.log(thisSite);
                         drawPage(thisSite);
                             drawNoodle();
                             onFrame();
@@ -93,6 +95,10 @@
         d3.selectAll("li").on("click", function() {
             $("body").css("overflow-y", "auto");
             var thisSite =  d3.select(this).text();
+            thisSiteIndex = $(this).index();
+
+            console.log(thisSiteIndex);
+
             drawPage(thisSite);
             drawNoodle();
             onFrame();
@@ -155,10 +161,8 @@
 
 //            var drawPersonalities = function () {
                 var personsArray = selectedData[0].persons.split(comma);
-                console.log(personsArray);
 
                 var imagesArray = selectedData[0].images.split(comma);
-                console.log(imagesArray);
                 var len = personsArray.length;
 
 if(personsArray[0].length > 2) {
@@ -180,7 +184,13 @@ if(personsArray[0].length > 2) {
 
 //        drawPage("Obozrevatel.com");
 
-
+        $('#toNext').on("click", function() {
+            var nextSite = $($("li")[thisSiteIndex + 1]).text();
+            thisSiteIndex = thisSiteIndex + 1;
+            drawPage(nextSite);
+            drawNoodle();
+            onFrame();
+        });
 
 
     });
@@ -191,7 +201,9 @@ $("#toList").on("click", function() {
     window.scrollTo(0, 0);
     $("body").css("overflow-y", "hidden");
 
-})
+});
+
+
 </script>
 
 </body>
