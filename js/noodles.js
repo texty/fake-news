@@ -2,9 +2,10 @@
 // http://processing.org/learning/topics/follow3.html
 
 
-    function getRandomArbitrary(min, max) {
-        return Math.random() * (max - min) + min;
-    }
+function getRandomArbitrary(min, max) {
+     return Math.random() * (max - min) + min;
+}
+
 
 // function to draw one noodle
     function noodle(num_points, start_point) {
@@ -40,8 +41,6 @@
         return path;
 
     }
-
-var noodles;
 
 // loop to create all noodles (static)
 drawNoodle = function() {
