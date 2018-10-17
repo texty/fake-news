@@ -1,8 +1,8 @@
 /**
  * Created by yevheniia on 16.10.18.
  */
-var drawNoodle;
-var onFrame;
+// var drawNoodle;
+// var onFrame;
 
 //тектовий набір даних, аби перевести порядковий номер макаронини на графіку в критерій оцінки
 var indicators = [
@@ -123,7 +123,6 @@ var columns;
 
 if (window.innerWidth > 1500){
     columns = 10 } else { columns = Math.floor(chartWidth / 100);
-
 }
 
 
@@ -132,24 +131,12 @@ var chartHeight =  200 * (50 / columns);
 var curve_it = function(lineData){
     var  newLineData  = [lineData[0]];
     for(var i = 1; i < lineData.length; i++  ){
-        var phi = getRandomArbitrary(-Math.PI/100, Math.PI/100);
+        var phi = getRandomArbitrary(-Math.PI/50, Math.PI/50);
         var prev_point = lineData[i-1];
         newLineData[i] = { x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length*Math.cos(phi) }
     }
     return newLineData;
 };
-
-var curve_it2 = function(lineData){
-    var  newLineData  = [lineData[0]];
-    for(var i = 1; i < lineData.length; i++  ){
-        var phi = getRandomArbitrary(-Math.PI/100, Math.PI/100);
-        var prev_point = lineData[i-1];
-        newLineData[i] = { x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length*Math.cos(phi) }
-    }
-    return newLineData;
-};
-
-
 
 
 // random number in any interval [min, max]
@@ -175,18 +162,6 @@ var prepare_data = function(d){
 };
 
 
-var prepare_data2 = function(d){
-    var data = d.points.map(function(d, i){
-        var lineData = d3.range(1, d, 2)
-            .map(function(d){
-                return {x:(i+1), y:d}
-            });
-        return curve_it2(lineData);
-
-
-    });
-    return data;
-};
 
 var xScale = d3.scaleLinear()
     .domain([0, 7]) // input
@@ -197,8 +172,8 @@ var yScale = d3.scaleLinear()
 
 var lineFunction = d3.line()
     .x(function(d) { return xScale(d.x); })
-    .y(function(d) { return yScale(d.y); })
-    .curve(d3.curveCatmullRom.alpha(0.5));
+    .y(function(d) { return yScale(d.y); });
+    // .curve(d3.curveCatmullRom.alpha(1));
 
 
 
@@ -234,14 +209,18 @@ var main =  function (data){
     var media;
 
     var path = boxes.selectAll("path")
-        .data(function(d){return prepare_data(d);})
+        .data(function(d){
+            return prepare_data(d);
+        })
         .enter().append("path")
         .attr("stroke", "gold")
         .attr("stroke-width", 7)
         .attr("class", "line")
         .attr("stroke-linecap", "round")
         .attr("fill", "none")
-        .attr("d", function(d){ return d[0] ? lineFunction(d)  : '';})
+        .attr("d", function(d){
+            return d[0] ? lineFunction(d)  : '';
+        })
         .on("click", function(d) {
             // console.log(d[0].x);
             var selectedIndicator = indicators.filter(function(obj) {
@@ -253,13 +232,14 @@ var main =  function (data){
 
     setInterval(function() {
         path = path.data(function (d) {
-            return prepare_data2(d);
+            return prepare_data(d);
         });
 
         // Since this is created before enter.append, it only applies to updating nodes.
         path.transition()
             .duration(750)
-            .attr("d", function(d){ return d[0] ? lineFunction(d)  : '';})
+            .attr("d", function(d){
+                return d[0] ? lineFunction(d)  : '';})
 
     }, 200);
 
@@ -345,7 +325,7 @@ $("#mediaTitle").on("click", function(){
     var siteName = $(this).text();
     d3.select("#modal").style("display", "grid");
     drawPage(siteName);
-    drawNoodle();
+    drawNoodle(siteName);
 });
 
 $('#cross').on("click", function(){

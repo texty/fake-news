@@ -18,11 +18,14 @@ body {
   height: 100vh;
   overflow-y: auto; }
 
-svg {
+#small-multiples > svg {
   margin-top: 30px; }
   @media (min-width: 2000px) {
-    svg {
+    #small-multiples > svg {
       margin-left: 5%; } }
+
+#pageChart > svg {
+  margin-top: -10px; }
 
 li {
   list-style-type: none;

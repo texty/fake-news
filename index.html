@@ -11,11 +11,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700,700i&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
-    <script type="text/javascript" src="lib/paper-full.min.js"></script>
+    <!--<script type="text/javascript" src="lib/paper-full.min.js"></script>-->
     <!---->
 
 
-    <script type="text/paperscript" src="js/noodles.js" canvas="canvas2"></script>
+    <!--<script type="text/paperscript" src="js/noodles.js" canvas="canvas2"></script>-->
 
 
 
@@ -47,14 +47,17 @@
 <div id="modal">
 
      <div id="noodles">
-        <canvas id="canvas2" resize></canvas>
+        <!--<canvas id="canvas2" resize></canvas>-->
+         <div id="pageChart">
+
+         </div>
         <div class="rotate-text">
-            <div>Ненадійне джерело інформації</div>
+            <div>Фейк</div>
+            <div>Мова ворожнечі</div>
+            <div>Маніпуляції з емоціями</div>
             <div>Недостовірна новина</div>
             <div>Маніпулятивний заголовок</div>
-            <div>Маніпуляції з емоціями</div>
-            <div>Мова ворожнечі</div>
-            <div>Фейк</div>
+            <div>Ненадійне джерело інформації</div>
         </div>
 
     </div>
@@ -76,6 +79,7 @@
 <script src="lib/jquery-2.1.4.min.js"></script>
 <!--<script src="lib/d3.v3.min.js"></script>-->
 <script type="text/javascript" src="lib/d3.js"></script>
+<script type="text/javascript" src="js/d3noodles.js"></script>
 <script type="text/javascript" src="js/smallMultiples.js"></script>
 
 <script>
