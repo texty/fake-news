@@ -11,11 +11,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700,700i&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
-    <!--<script type="text/javascript" src="lib/paper-full.min.js"></script>-->
+    <script type="text/javascript" src="lib/paper-full.min.js"></script>
     <!---->
 
 
-    <!--<script type="text/paperscript" src="js/noodles.js" canvas="canvas2">-->
+    <script type="text/paperscript" src="js/noodles.js" canvas="canvas2"></script>
 
 
 
@@ -33,6 +33,7 @@
     <div id="url-links">
         <div id="mediaTitle">
             <h4></h4>
+            <p></p>
         </div>
         <div id="selectedIndicator"></div>
         <ul id="listOfLinks">
@@ -43,203 +44,45 @@
 
 </div>
 
-<!--<div id="mainPage">-->
-    <!--<canvas id="canvas1" resize></canvas>-->
-    <!--&lt;!&ndash;<canvas id="canvas1"></canvas>&ndash;&gt;-->
-    <!--&lt;!&ndash;<canvas id="canvas2"></canvas>&ndash;&gt;-->
-    <!--<div id="title">FAKE NEWS</div>-->
-    <!--<img id="play" style="width:50px;" src="img/down-arrow.png"/>-->
+<div id="modal">
 
-<!--</div>-->
+     <div id="noodles">
+        <canvas id="canvas2" resize></canvas>
+        <div class="rotate-text">
+            <div>Ненадійне джерело інформації</div>
+            <div>Недостовірна новина</div>
+            <div>Маніпулятивний заголовок</div>
+            <div>Маніпуляції з емоціями</div>
+            <div>Мова ворожнечі</div>
+            <div>Фейк</div>
+        </div>
 
-<!--<div id="mediaList">-->
-    <!--<h3>Список складено на основі рейтингів Gemius та TNS.<br>-->
-        <!--У списку нижче перший сайт найбільш відвідуваний, останій - найменш-->
-    <!--</h3>-->
-    <!--<ol id="limheight" start="1">-->
+    </div>
 
-    <!--</ol>-->
+    <div id="textContent">
+        <div id="name">
+            <h1></h1>
+        </div>
+        <div id="lead"></div>
+        <div id="descript"></div>
+    </div>
+    <div id="persons">
+        <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>
+    </div>
+    <div id="cross">&times;</div>
 
-
-<!--</div>-->
-
-
-<!--<div id="grid">-->
-    <!--<div id="noodles">-->
-        <!--<canvas id="canvas2" resize></canvas>-->
-        <!--<div class="rotate-text">-->
-            <!--<div>Ненадійне джерело інформації</div>-->
-            <!--<div>Недостовірна новина</div>-->
-            <!--<div>Маніпулятивний заголовок</div>-->
-            <!--<div>Маніпуляції з емоціями</div>-->
-            <!--<div>Мова ворожнечі</div>-->
-            <!--<div>Фейк</div>-->
-        <!--</div>-->
-
-        <!--<button id="toList">До списку</button>-->
-        <!--<button id="toNext">Гортати</button>-->
-
-    <!--</div>-->
-
-    <!--<div id="textContent">-->
-        <!--<div id="name">-->
-            <!--<h1></h1>-->
-        <!--</div>-->
-        <!--<div id="lead"></div>-->
-        <!--<div id="descript"></div>-->
-    <!--</div>-->
-    <!--<div id="persons">-->
-        <!--<p>Було зафіксовано публікації з ознаками замовлення щодо:</p>-->
-    <!--</div>-->
-<!--</div>-->
+</div>
 
 <script src="lib/jquery-2.1.4.min.js"></script>
 <!--<script src="lib/d3.v3.min.js"></script>-->
 <script type="text/javascript" src="lib/d3.js"></script>
 <script type="text/javascript" src="js/smallMultiples.js"></script>
 
-<!--<script>-->
- <!--var drawNoodle;-->
- <!--var onFrame;-->
-    <!--var a=10, b=15, c=20, d=1, e=4, f=8;-->
-    <!--d3.csv("data/data.csv", function (data) {-->
-
-        <!--var siteArray = data.map(function(d) {-->
-            <!--return d.site;-->
-        <!--});-->
-
-
-        <!--var thisSiteIndex;-->
-        <!--for(var i =0; i < siteArray.length; i++) {-->
-            <!--d3.select('#mediaList > ol')-->
-                    <!--.append("li")-->
-                    <!--.text(function (){-->
-                        <!--return siteArray[i]-->
-                    <!--})-->
-                    <!--.on("click", function() {-->
-                        <!--var thisSite =  d3.select(this).text();-->
-                        <!--console.log(thisSite);-->
-                        <!--drawPage(thisSite);-->
-                            <!--drawNoodle();-->
-                            <!--onFrame();-->
-
-
-                    <!--})-->
-        <!--}-->
-
-        <!--d3.selectAll("li").on("click", function() {-->
-            <!--$("body").css("overflow-y", "auto");-->
-            <!--var thisSite =  d3.select(this).text();-->
-            <!--thisSiteIndex = $(this).index();-->
-            <!--drawPage(thisSite);-->
-            <!--drawNoodle();-->
-            <!--onFrame();-->
-
-
-        <!--});-->
-
-<!--//        Додаємо потрібний текст: назву, лід, опис-->
-        <!--var drawPage = function (site) {-->
-            <!--d3.select("#mediaList").style("display", "none");-->
-            <!--d3.select("#grid").style("display", "grid");-->
-            <!--d3.select("#persons").html(" <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>");-->
-<!--//            d3.select('#noodles').html('<canvas id="myCanvas" resize></canvas><div class="rotate-text"><div>Ненадійне джерело інформації</div><div>Недостовірна новина</div><div>Маніпулятивний заголовок</div><div>Маніпуляції з емоціями</div><div>Мова ворожнечі</div><div>Фейк</div></div><button id="toList">До списку</button>');-->
-            <!--var selectedData = data.filter(function (d) {-->
-                <!--return d.site === site;-->
-            <!--});-->
-            <!--a = +selectedData[0].uncertainSource + 1;-->
-            <!--b = +selectedData[0].nonReliableNews + 1;-->
-            <!--c = +selectedData[0].manipulativeHeading + 1;-->
-            <!--d = +selectedData[0].manipulationsWithEmotions + 1;-->
-            <!--e = +selectedData[0].hateSpeech + 1;-->
-            <!--f = +selectedData[0].fakes + 1;-->
-
-
-            <!--d3.select('#name > h1').html(function () {-->
-                <!--return selectedData[0].name-->
-            <!--});-->
-            <!--d3.select('#lead').html(function () {-->
-                <!--return selectedData[0].lead-->
-            <!--});-->
-            <!--d3.select('#descript').html(function () {-->
-                <!--return selectedData[0].content-->
-            <!--});-->
+<script>
 
 
 
-            <!--$('span#highQaulityNews').css("width", function () {-->
-                <!--return +selectedData[0].highQaulityNews-->
-            <!--});-->
-            <!--$('span#uncertainSource').css("width", function () {-->
-                <!--return +selectedData[0].uncertainSource-->
-            <!--});-->
-            <!--$('span#nonReliableNews').css("width", function () {-->
-                <!--return +selectedData[0].nonReliableNews-->
-            <!--});-->
-            <!--$('span#manipulativeHeading').css("width", function () {-->
-                <!--return +selectedData[0].manipulativeHeading-->
-            <!--});-->
-            <!--$('span#manipulationsWithEmotions').css("width", function () {-->
-                <!--return +selectedData[0].manipulationsWithEmotions-->
-            <!--});-->
-            <!--$('span#hateSpeech').css("width", function () {-->
-                <!--return +selectedData[0].hateSpeech-->
-            <!--});-->
-            <!--$('span#fakes').css("width", function () {-->
-                <!--return +selectedData[0].fakes-->
-            <!--});-->
-
-            <!--var comma = ',';-->
-
-<!--//            var drawPersonalities = function () {-->
-                <!--var personsArray = selectedData[0].persons.split(comma);-->
-
-                <!--var imagesArray = selectedData[0].images.split(comma);-->
-                <!--var len = personsArray.length;-->
-
-<!--if(personsArray[0].length > 2) {-->
-    <!--for (var i = 0; i < len; i++) {-->
-        <!--d3.select("#persons")-->
-                <!--.append("div")-->
-                <!--.html(function () {-->
-                    <!--return "<img src='img/" + imagesArray[i] + "'/><p class='personName'>" + personsArray[i] + "</p>"-->
-                <!--})-->
-    <!--}-->
-<!--}-->
-
-
-
-
-            <!--};-->
-
-        <!--$('#toNext').on("click", function() {-->
-            <!--var nextSite = $($("li")[thisSiteIndex + 1]).text();-->
-            <!--thisSiteIndex = thisSiteIndex + 1;-->
-            <!--drawPage(nextSite);-->
-            <!--drawNoodle();-->
-            <!--onFrame();-->
-        <!--});-->
-
-
-    <!--});-->
-
-<!--$("#toList").on("click", function() {-->
-    <!--$("#mediaList").css("display", "block");-->
-    <!--$("#grid").css("display", "none");-->
-    <!--window.scrollTo(0, 0);-->
-    <!--$("body").css("overflow-y", "hidden");-->
-
-<!--});-->
-
-    <!--$('#play').on("click", function() {-->
-        <!--$('#mainPage').remove();-->
-        <!--$('script[type="text/paperscript"]').attr("canvas", "myCanvas");-->
-    <!--});-->
-
-
-
-
-<!--</script>-->
+</script>
 
 </body>
 </html>

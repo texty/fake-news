@@ -13,7 +13,7 @@ function getRandomArbitrary(min, max) {
         var points = num_points;
 
         // The distance between the points:
-        var length = 12;
+        var length = 4;
 
         var path = new Path({
             strokeColor: 'gold',
