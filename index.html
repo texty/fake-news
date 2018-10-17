@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,307 +8,238 @@
     <title>Фейки</title>
 
     <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700,700i&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+
     <link rel="stylesheet" href="css/styles.css">
-    <script type="text/javascript" src="lib/paper-full.min.js"></script>
-    <script type="text/paperscript" canvas="canvas1">
-
-        function getRandomArbitrary(min, max) {
-     return Math.random() * (max - min) + min;
-}
+    <!--<script type="text/javascript" src="lib/paper-full.min.js"></script>-->
+    <!---->
 
 
-// function to draw one noodle
-    function noodle(num_points, start_point) {
-        // The amount of points in the path:
-        var points = num_points;
-
-        // The distance between the points:
-        var length = 12;
-
-        var path = new Path({
-            strokeColor: 'gold',
-            strokeWidth: 15,
-            strokeCap: 'round'
-        });
-
-        var start = start_point / [1, 100];
-        var prev_point = start;
-        path.add(start);
-
-        // to generate slightly curved noodle
-        for (var i = 1; i < points; i++) {
-            var segment = path.segments[i - 1];
-            var prev_point = segment.point;
-            phi = getRandomArbitrary(-Math.PI / 25, Math.PI / 25);
-            if (i == points) { // last point
-                path.add(new Point(start.x, prev_point.y + length));
-            } else { // for all points except last one, tilt segment with some randome angle
-                path.add(prev_point + new Point(length * Math.sin(phi), length * Math.cos(phi)));
-            }
-        }
-
-        path.smooth({type: 'continuous'});
-        return path;
-
-    }
-
-var noodles =  [{value: a},
-    {value: 15},
-    {value: 30},
-    {value: 10},
-    {value: 4},
-    {value: 12},
-    {value: 18},
-    {value: 22},
-    {value: 30},
-    {value: 35},
-    {value: 40},
-    {value: 18},
-    {value: 15},
-    {value: 16},
-    {value: 7},
-    {value: 22},
-    {value: 11}
-];
-for (var i = 0; i < noodles.length; i++) {
-    noodles[i].path = noodle(noodles[i].value, new Point(50 + 50 * i, 0));
-}
-
-
- var amount = 20;
-
-    onFrameT = function(event) {
-        for (var k = 0; k < noodles.length; k++) {
-            var path = noodles[k].path;
-            var n_segments = path.segments.length;
-            if (n_segments >= 2) {
-                // Loop through the segments of the path:
-                for (var i = 1; i <= Math.floor(n_segments * amount); i++) {
-
-                    var segment = path.segments[n_segments - i];
-                    // A cylic value between -1 and 1
-                    var sinus = Math.sin(event.time * 2);
-
-                    var sign = k % 2 ? -1 : 1;
-                    // Change the x position of the segment point:
-                    segment.point.x += sign * sinus / (i * 5);
-                }
-            }
-        }
-    }
+    <!--<script type="text/paperscript" src="js/noodles.js" canvas="canvas2">-->
 
 
 
 
-
-
-
-    </script>
-    <script type="text/paperscript" src="js/noodles.js" canvas="canvas2">
-
-
-
-    </script>
 </head>
 
 
 <body>
-<div id="mainPage">
-    <canvas id="canvas1" resize></canvas>
-    <!--<canvas id="canvas1"></canvas>-->
-    <!--<canvas id="canvas2"></canvas>-->
-    <div id="title">FAKE NEWS</div>
-    <img id="play" style="width:50px;" src="img/down-arrow.png"/>
-
-</div>
-
-<div id="mediaList">
-    <h3>Список складено на основі рейтингів Gemius та TNS.<br>
-        У списку нижче перший сайт найбільш відвідуваний, останій - найменш
-    </h3>
-    <ol id="limheight" start="1">
-
-    </ol>
-
-
-</div>
-
-
-<div id="grid">
-    <div id="noodles">
-        <canvas id="canvas2" resize></canvas>
-        <div class="rotate-text">
-            <div>Ненадійне джерело інформації</div>
-            <div>Недостовірна новина</div>
-            <div>Маніпулятивний заголовок</div>
-            <div>Маніпуляції з емоціями</div>
-            <div>Мова ворожнечі</div>
-            <div>Фейк</div>
+<div id="main-page">
+    <div id="small-multiples">
+        <h4>Список складено на основі рейтингів Gemius та TNS.Перший сайт найбільш недостовірний, останній - найменш.
+        </h4>
+        <p>Клікніть на назву сайту, щоб побачити повну інформацію про нього. Довжина кожної макароніни означає кількість недостовірних новин певної категорії. По кліку на макаронину їх список випадає справа </p>
+    </div>
+    <div id="url-links">
+        <div id="mediaTitle">
+            <h4></h4>
         </div>
+        <div id="selectedIndicator"></div>
+        <ul id="listOfLinks">
 
-        <button id="toList">До списку</button>
-        <button id="toNext">Гортати</button>
+        </ul>
 
     </div>
 
-    <div id="textContent">
-        <div id="name">
-            <h1></h1>
-        </div>
-        <div id="lead"></div>
-        <div id="descript"></div>
-    </div>
-    <div id="persons">
-        <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>
-    </div>
 </div>
+
+<!--<div id="mainPage">-->
+    <!--<canvas id="canvas1" resize></canvas>-->
+    <!--&lt;!&ndash;<canvas id="canvas1"></canvas>&ndash;&gt;-->
+    <!--&lt;!&ndash;<canvas id="canvas2"></canvas>&ndash;&gt;-->
+    <!--<div id="title">FAKE NEWS</div>-->
+    <!--<img id="play" style="width:50px;" src="img/down-arrow.png"/>-->
+
+<!--</div>-->
+
+<!--<div id="mediaList">-->
+    <!--<h3>Список складено на основі рейтингів Gemius та TNS.<br>-->
+        <!--У списку нижче перший сайт найбільш відвідуваний, останій - найменш-->
+    <!--</h3>-->
+    <!--<ol id="limheight" start="1">-->
+
+    <!--</ol>-->
+
+
+<!--</div>-->
+
+
+<!--<div id="grid">-->
+    <!--<div id="noodles">-->
+        <!--<canvas id="canvas2" resize></canvas>-->
+        <!--<div class="rotate-text">-->
+            <!--<div>Ненадійне джерело інформації</div>-->
+            <!--<div>Недостовірна новина</div>-->
+            <!--<div>Маніпулятивний заголовок</div>-->
+            <!--<div>Маніпуляції з емоціями</div>-->
+            <!--<div>Мова ворожнечі</div>-->
+            <!--<div>Фейк</div>-->
+        <!--</div>-->
+
+        <!--<button id="toList">До списку</button>-->
+        <!--<button id="toNext">Гортати</button>-->
+
+    <!--</div>-->
+
+    <!--<div id="textContent">-->
+        <!--<div id="name">-->
+            <!--<h1></h1>-->
+        <!--</div>-->
+        <!--<div id="lead"></div>-->
+        <!--<div id="descript"></div>-->
+    <!--</div>-->
+    <!--<div id="persons">-->
+        <!--<p>Було зафіксовано публікації з ознаками замовлення щодо:</p>-->
+    <!--</div>-->
+<!--</div>-->
 
 <script src="lib/jquery-2.1.4.min.js"></script>
-<script src="lib/d3.v3.min.js"></script>
+<!--<script src="lib/d3.v3.min.js"></script>-->
+<script type="text/javascript" src="lib/d3.js"></script>
+<script type="text/javascript" src="js/smallMultiples.js"></script>
+
+<!--<script>-->
+ <!--var drawNoodle;-->
+ <!--var onFrame;-->
+    <!--var a=10, b=15, c=20, d=1, e=4, f=8;-->
+    <!--d3.csv("data/data.csv", function (data) {-->
+
+        <!--var siteArray = data.map(function(d) {-->
+            <!--return d.site;-->
+        <!--});-->
 
 
-<script>
- var drawNoodle;
- var onFrame;
-    var a=10, b=15, c=20, d=1, e=4, f=8;
-    d3.csv("data/data.csv", function (data) {
-
-        var siteArray = data.map(function(d) {
-            return d.site;
-        });
-
-
-        var thisSiteIndex;
-        for(var i =0; i < siteArray.length; i++) {
-            d3.select('#mediaList > ol')
-                    .append("li")
-                    .text(function (){
-                        return siteArray[i]
-                    })
-                    .on("click", function() {
-                        var thisSite =  d3.select(this).text();
-                        console.log(thisSite);
-                        drawPage(thisSite);
-                            drawNoodle();
-                            onFrame();
+        <!--var thisSiteIndex;-->
+        <!--for(var i =0; i < siteArray.length; i++) {-->
+            <!--d3.select('#mediaList > ol')-->
+                    <!--.append("li")-->
+                    <!--.text(function (){-->
+                        <!--return siteArray[i]-->
+                    <!--})-->
+                    <!--.on("click", function() {-->
+                        <!--var thisSite =  d3.select(this).text();-->
+                        <!--console.log(thisSite);-->
+                        <!--drawPage(thisSite);-->
+                            <!--drawNoodle();-->
+                            <!--onFrame();-->
 
 
-                    })
-        }
+                    <!--})-->
+        <!--}-->
 
-        d3.selectAll("li").on("click", function() {
-            $("body").css("overflow-y", "auto");
-            var thisSite =  d3.select(this).text();
-            thisSiteIndex = $(this).index();
-            drawPage(thisSite);
-            drawNoodle();
-            onFrame();
-
-
-        });
-
-//        Додаємо потрібний текст: назву, лід, опис
-        var drawPage = function (site) {
-            d3.select("#mediaList").style("display", "none");
-            d3.select("#grid").style("display", "grid");
-            d3.select("#persons").html(" <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>");
-//            d3.select('#noodles').html('<canvas id="myCanvas" resize></canvas><div class="rotate-text"><div>Ненадійне джерело інформації</div><div>Недостовірна новина</div><div>Маніпулятивний заголовок</div><div>Маніпуляції з емоціями</div><div>Мова ворожнечі</div><div>Фейк</div></div><button id="toList">До списку</button>');
-            var selectedData = data.filter(function (d) {
-                return d.site === site;
-            });
-            a = +selectedData[0].uncertainSource + 1;
-            b = +selectedData[0].nonReliableNews + 1;
-            c = +selectedData[0].manipulativeHeading + 1;
-            d = +selectedData[0].manipulationsWithEmotions + 1;
-            e = +selectedData[0].hateSpeech + 1;
-            f = +selectedData[0].fakes + 1;
+        <!--d3.selectAll("li").on("click", function() {-->
+            <!--$("body").css("overflow-y", "auto");-->
+            <!--var thisSite =  d3.select(this).text();-->
+            <!--thisSiteIndex = $(this).index();-->
+            <!--drawPage(thisSite);-->
+            <!--drawNoodle();-->
+            <!--onFrame();-->
 
 
-            d3.select('#name > h1').html(function () {
-                return selectedData[0].name
-            });
-            d3.select('#lead').html(function () {
-                return selectedData[0].lead
-            });
-            d3.select('#descript').html(function () {
-                return selectedData[0].content
-            });
+        <!--});-->
+
+<!--//        Додаємо потрібний текст: назву, лід, опис-->
+        <!--var drawPage = function (site) {-->
+            <!--d3.select("#mediaList").style("display", "none");-->
+            <!--d3.select("#grid").style("display", "grid");-->
+            <!--d3.select("#persons").html(" <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>");-->
+<!--//            d3.select('#noodles').html('<canvas id="myCanvas" resize></canvas><div class="rotate-text"><div>Ненадійне джерело інформації</div><div>Недостовірна новина</div><div>Маніпулятивний заголовок</div><div>Маніпуляції з емоціями</div><div>Мова ворожнечі</div><div>Фейк</div></div><button id="toList">До списку</button>');-->
+            <!--var selectedData = data.filter(function (d) {-->
+                <!--return d.site === site;-->
+            <!--});-->
+            <!--a = +selectedData[0].uncertainSource + 1;-->
+            <!--b = +selectedData[0].nonReliableNews + 1;-->
+            <!--c = +selectedData[0].manipulativeHeading + 1;-->
+            <!--d = +selectedData[0].manipulationsWithEmotions + 1;-->
+            <!--e = +selectedData[0].hateSpeech + 1;-->
+            <!--f = +selectedData[0].fakes + 1;-->
 
 
-
-            $('span#highQaulityNews').css("width", function () {
-                return +selectedData[0].highQaulityNews
-            });
-            $('span#uncertainSource').css("width", function () {
-                return +selectedData[0].uncertainSource
-            });
-            $('span#nonReliableNews').css("width", function () {
-                return +selectedData[0].nonReliableNews
-            });
-            $('span#manipulativeHeading').css("width", function () {
-                return +selectedData[0].manipulativeHeading
-            });
-            $('span#manipulationsWithEmotions').css("width", function () {
-                return +selectedData[0].manipulationsWithEmotions
-            });
-            $('span#hateSpeech').css("width", function () {
-                return +selectedData[0].hateSpeech
-            });
-            $('span#fakes').css("width", function () {
-                return +selectedData[0].fakes
-            });
-
-            var comma = ',';
-
-//            var drawPersonalities = function () {
-                var personsArray = selectedData[0].persons.split(comma);
-
-                var imagesArray = selectedData[0].images.split(comma);
-                var len = personsArray.length;
-
-if(personsArray[0].length > 2) {
-    for (var i = 0; i < len; i++) {
-        d3.select("#persons")
-                .append("div")
-                .html(function () {
-                    return "<img src='img/" + imagesArray[i] + "'/><p class='personName'>" + personsArray[i] + "</p>"
-                })
-    }
-}
+            <!--d3.select('#name > h1').html(function () {-->
+                <!--return selectedData[0].name-->
+            <!--});-->
+            <!--d3.select('#lead').html(function () {-->
+                <!--return selectedData[0].lead-->
+            <!--});-->
+            <!--d3.select('#descript').html(function () {-->
+                <!--return selectedData[0].content-->
+            <!--});-->
 
 
 
+            <!--$('span#highQaulityNews').css("width", function () {-->
+                <!--return +selectedData[0].highQaulityNews-->
+            <!--});-->
+            <!--$('span#uncertainSource').css("width", function () {-->
+                <!--return +selectedData[0].uncertainSource-->
+            <!--});-->
+            <!--$('span#nonReliableNews').css("width", function () {-->
+                <!--return +selectedData[0].nonReliableNews-->
+            <!--});-->
+            <!--$('span#manipulativeHeading').css("width", function () {-->
+                <!--return +selectedData[0].manipulativeHeading-->
+            <!--});-->
+            <!--$('span#manipulationsWithEmotions').css("width", function () {-->
+                <!--return +selectedData[0].manipulationsWithEmotions-->
+            <!--});-->
+            <!--$('span#hateSpeech').css("width", function () {-->
+                <!--return +selectedData[0].hateSpeech-->
+            <!--});-->
+            <!--$('span#fakes').css("width", function () {-->
+                <!--return +selectedData[0].fakes-->
+            <!--});-->
 
-            };
+            <!--var comma = ',';-->
 
-        $('#toNext').on("click", function() {
-            var nextSite = $($("li")[thisSiteIndex + 1]).text();
-            thisSiteIndex = thisSiteIndex + 1;
-            drawPage(nextSite);
-            drawNoodle();
-            onFrame();
-        });
+<!--//            var drawPersonalities = function () {-->
+                <!--var personsArray = selectedData[0].persons.split(comma);-->
 
+                <!--var imagesArray = selectedData[0].images.split(comma);-->
+                <!--var len = personsArray.length;-->
 
-    });
-
-$("#toList").on("click", function() {
-    $("#mediaList").css("display", "block");
-    $("#grid").css("display", "none");
-    window.scrollTo(0, 0);
-    $("body").css("overflow-y", "hidden");
-
-});
-
-    $('#play').on("click", function() {
-        $('#mainPage').remove();
-        $('script[type="text/paperscript"]').attr("canvas", "myCanvas");
-    });
+<!--if(personsArray[0].length > 2) {-->
+    <!--for (var i = 0; i < len; i++) {-->
+        <!--d3.select("#persons")-->
+                <!--.append("div")-->
+                <!--.html(function () {-->
+                    <!--return "<img src='img/" + imagesArray[i] + "'/><p class='personName'>" + personsArray[i] + "</p>"-->
+                <!--})-->
+    <!--}-->
+<!--}-->
 
 
 
 
-</script>
+            <!--};-->
+
+        <!--$('#toNext').on("click", function() {-->
+            <!--var nextSite = $($("li")[thisSiteIndex + 1]).text();-->
+            <!--thisSiteIndex = thisSiteIndex + 1;-->
+            <!--drawPage(nextSite);-->
+            <!--drawNoodle();-->
+            <!--onFrame();-->
+        <!--});-->
+
+
+    <!--});-->
+
+<!--$("#toList").on("click", function() {-->
+    <!--$("#mediaList").css("display", "block");-->
+    <!--$("#grid").css("display", "none");-->
+    <!--window.scrollTo(0, 0);-->
+    <!--$("body").css("overflow-y", "hidden");-->
+
+<!--});-->
+
+    <!--$('#play').on("click", function() {-->
+        <!--$('#mainPage').remove();-->
+        <!--$('script[type="text/paperscript"]').attr("canvas", "myCanvas");-->
+    <!--});-->
+
+
+
+
+<!--</script>-->
 
 </body>
 </html>
