@@ -134,10 +134,16 @@ if(selectedData[0].instead){
 /* ------ Малюємо головну сторінку - small multiples   -------- */
 
 //ширина графіки дорівнює ширині grid-column - 70%
-var chartWidth = window.innerWidth * 0.7;
-var columns;
+var chartWidth;
+if (window.innerWidth < 800){
+    chartWidth = window.innerWidth;
+} else {
+    chartWidth = window.innerWidth * 0.7;
+}
+
 
 //для маленьких екранів кількість колонок в рядку регулюється шириною екрану
+var columns;
 if (window.innerWidth > 1500){
     columns = 10 } else { columns = Math.floor(chartWidth / 100);
 }
@@ -272,11 +278,17 @@ var main =  function (data){
         boxes.on("click", function(d) {
             d3.select('#listOfLinks').selectAll("li").remove();
 
-
             //назву ЗМІ у відповідне поле
             $("#mediaTitle").html("<h4>"+ d.site + "</h4>");
             $("#hint").css("display", "block");
-            media = d.site;
+
+            media = d.site; // key
+            
+            if(window.innerWidth < 800) {
+                drawPage(media);
+                drawNoodle(media);
+                d3.select("#modal").style("display", "block");
+            }
 
             //робимо датасет із списком коротких лінків для кожного випадку
             var mylist = shortUrlData.filter(function(k){
@@ -336,7 +348,14 @@ d3.csv("./data/ranking_by_sum.csv",
 
 //Змінюємо кількість колонок мультіплс, коли звужується вікно
 window.addEventListener("resize", function() {
-    var chartWidth = window.innerWidth * 0.7;
+    var chartWidth;
+    if (window.innerWidth < 800){
+        chartWidth = window.innerWidth;
+    } else {
+        chartWidth = window.innerWidth * 0.7;
+    }
+
+
     var columns;
     if (window.innerWidth > 1500){
         columns = 10 } else { columns = Math.floor(chartWidth / 100);
@@ -368,7 +387,10 @@ $("#mediaTitle").on("click", function(){
 /* По кліку на &times закриваємо її*/
 $('#cross').on("click", function(){
     d3.select("#modal").style("display", "none");
+});
 
+$('#mob-return').on("click", function(){
+    d3.select("#modal").style("display", "none");
 });
 
 

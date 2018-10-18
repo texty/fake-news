@@ -9,7 +9,7 @@ drawNoodle = function(site) {
     var curve_it2 = function (lineData) {
         var newLineData = [lineData[0]];
         for (var i = 1; i < lineData.length; i++) {
-            var phi = getRandomArbitrary(-Math.PI / 100, Math.PI / 100);
+            var phi = getRandomArbitrary(-Math.PI / 150, Math.PI / 150);
             var prev_point = lineData[i - 1];
             newLineData[i] = {x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length * Math.cos(phi)}
         }
