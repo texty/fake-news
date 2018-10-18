@@ -58,12 +58,12 @@ var drawPage = function (site) {
     });
 
     //задаємо значення для змінних, щоб намалювати макаронини на сторінці ЗМІ
-    a = +selectedData[0].uncertainSource + 1;
-    b = +selectedData[0].nonReliableNews + 1;
-    c = +selectedData[0].manipulativeHeading + 1;
-    d = +selectedData[0].manipulationsWithEmotions + 1;
-    e = +selectedData[0].hateSpeech + 1;
-    f = +selectedData[0].fakes + 1;
+    a = +selectedData[0].uncertainSource;
+    b = +selectedData[0].nonReliableNews;
+    c = +selectedData[0].manipulativeHeading;
+    d = +selectedData[0].manipulationsWithEmotions;
+    e = +selectedData[0].hateSpeech;
+    f = +selectedData[0].fakes;
 
     //додаємо текст на сторінку ЗМІ - назву, лід і опис
     d3.select('#name > h1').html(function () {
@@ -233,6 +233,7 @@ var main =  function (data){
             return d[0] ? lineFunction(d)  : '';
         })
         .on("click", function(d) {
+            d3.select('#selectedIndicator').html();
             //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
             var selectedIndicator = indicators.filter(function(obj) {
                 return obj.number === d[0].x;
@@ -262,6 +263,7 @@ var main =  function (data){
         boxes.on("click", function(d) {
             d3.select('#listOfLinks').selectAll("li").remove();
 
+
             //назву ЗМІ у відповідне поле
             $("#mediaTitle").html("<h4>"+ d.site + "</h4>");
             media = d.site;
@@ -278,6 +280,8 @@ var main =  function (data){
             // якщо список не порожній, виводимо назву індикатора перед ним
             if(urls.length != 0){
                 $('#selectedIndicator').html(indicator);
+            } else {
+                $('#selectedIndicator').html(" ");
             }
 
             //додаємо лінки
