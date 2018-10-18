@@ -21,7 +21,13 @@ body {
   transform: rotateY(180deg) !important; }
 
 #hint {
-  text-align: right; }
+  display: none;
+  width: 80%;
+  text-align: right;
+  margin-bottom: 50px; }
+
+#hint span {
+  font-size: 18px; }
 
 #small-multiples > svg {
   margin-top: 30px; }
@@ -41,7 +47,8 @@ li {
 
 h4 {
   font-size: 22px;
-  font-weight: 100; }
+  font-weight: 100;
+  -webkit-margin-after: 0; }
   @media (min-width: 2000px) {
     h4 {
       font-size: 30px; } }
@@ -77,9 +84,9 @@ ul {
   -webkit-margin-before: 0; }
 
 #mediaTitle {
+  cursor: pointer;
   background-color: gold;
-  width: 80%;
-  margin-bottom: 50px; }
+  width: 80%; }
 
 #small-multiples {
   border-right: 1px solid grey;
@@ -133,7 +140,7 @@ h3 {
   width: 100%; }
 
 #textContent {
-  margin: 10vh auto 0 0;
+  margin: 10% auto 100px 0;
   width: 80%; }
 
 h1 {

@@ -29,6 +29,7 @@ d3.csv("./data/data.csv", function(d){
     return { site: d.site.toLowerCase(),
         name: d.name,
         lead: d.lead,
+        instead: d.instead,
         highQaulityNews: d.highQaulityNews,
         uncertainSource:d.uncertainSource,
         nonReliableNews: d.nonReliableNews,
@@ -51,11 +52,18 @@ var a, b, c, d, e, f; //змінні для макаронин на сторін
 
 
 //ця функція малює сторінку, фільтруючи дані по кліку на назву ЗМІ
-var drawPage = function (site) {
-    d3.select("#persons").html(" <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>");
+var drawPage = function (site) {    
     var selectedData = pageData.filter(function (d) {
         return d.site === site;
     });
+if(selectedData[0].instead){
+    d3.select("#persons").html(selectedData[0].instead);
+}
+    else {
+    d3.select("#persons").html(" <p><b>Було зафіксовано публікації з ознаками замовлення щодо:</b></p>");
+
+}
+    
 
     //задаємо значення для змінних, щоб намалювати макаронини на сторінці ЗМІ
     a = +selectedData[0].uncertainSource;
@@ -117,6 +125,7 @@ var drawPage = function (site) {
                 })
         }
     }
+   
 };
 
 
@@ -266,6 +275,7 @@ var main =  function (data){
 
             //назву ЗМІ у відповідне поле
             $("#mediaTitle").html("<h4>"+ d.site + "</h4>");
+            $("#hint").css("display", "block");
             media = d.site;
 
             //робимо датасет із списком коротких лінків для кожного випадку
