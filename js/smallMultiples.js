@@ -35,7 +35,7 @@ var addLinksMob = function (site) {
         .key(function(d) { return d.nonobs; })
         .entries(mobUrls);
 
-    console.log(nested_data);
+    $("#mob-urlLinks").find("ul").remove();
 
     for(var i = 0; i < nested_data.length; i++){
         var list = d3.select('#mob-urlLinks')
