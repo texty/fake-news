@@ -6,10 +6,10 @@ drawNoodle = function(site) {
     var chartWidth = 380;
     var chartHeight = window.innerHeight;
 
-    var curve_it = function (lineData) {
+    var curve_it2 = function (lineData) {
         var newLineData = [lineData[0]];
         for (var i = 1; i < lineData.length; i++) {
-            var phi = getRandomArbitrary(-Math.PI / 150, Math.PI / 150);
+            var phi = getRandomArbitrary(-Math.PI / 100, Math.PI / 100);
             var prev_point = lineData[i - 1];
             newLineData[i] = {x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length * Math.cos(phi)}
         }
@@ -32,7 +32,7 @@ drawNoodle = function(site) {
                 .map(function (d) {
                     return {x: (i + 1), y: d}
                 });
-            return curve_it(lineData);
+            return curve_it2(lineData);
 
 
         });
@@ -77,7 +77,7 @@ drawNoodle = function(site) {
             .attr("height", chartHeight);
 
 
-        box.selectAll("path")
+        var pagePath = box.selectAll("path")
             .data(function () {
                 return prepare_pageData(pageData);
             })
@@ -90,6 +90,22 @@ drawNoodle = function(site) {
             .attr("d", function (d) {
                 return d[0] ? lineFunction(d) : '';
             });
+
+        setInterval(function() {
+            pagePath = pagePath.data(function () {
+                return prepare_pageData(pageData);
+            });
+
+            // Since this is created before enter.append, it only applies to updating nodes.
+            pagePath.transition()
+                .duration(750)
+                .attr("d", function(d){
+                    return d[0] ? lineFunction(d)  : '';})
+
+        }, 200);
+        
+        
+        
     };
 
     d3.csv("./data/ranking_by_sum.csv",
