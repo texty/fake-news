@@ -1,8 +1,7 @@
 /**
  * Created by yevheniia on 16.10.18.
  */
-// var drawNoodle;
-// var onFrame;
+
 
 //тектовий набір даних, аби перевести порядковий номер макаронини на графіку в критерій оцінки
 var indicators = [
@@ -14,17 +13,17 @@ var indicators = [
     {"number":6, "value":"Ненадійне джерело інформації"}
 ];
 
-
-var fuckingdata;
+//дані з короткими url, які відкриваються по кліку на макаронину
+var shortUrlData;
 d3.csv("./data/data2.csv",
     function(d){
         return { site: d.site, url: d.url, nonobs: d.nonobs, short_url:d.short_url }
     })
     .then( function(dataset) {
-        fuckingdata = dataset
+        shortUrlData = dataset
     });
 
-
+//дані для сторінки конкретного змі
 var pageData;
 d3.csv("./data/data.csv", function(d){
     return { site: d.site.toLowerCase(),
@@ -46,13 +45,19 @@ d3.csv("./data/data.csv", function(d){
     pageData = thePage
 });
 
-var a, b, c, d, e, f;
 
+
+var a, b, c, d, e, f; //змінні для макаронин на сторінці конкретного ЗМІ
+
+
+//ця функція малює сторінку, фільтруючи дані по кліку на назву ЗМІ
 var drawPage = function (site) {
     d3.select("#persons").html(" <p>Було зафіксовано публікації з ознаками замовлення щодо:</p>");
     var selectedData = pageData.filter(function (d) {
         return d.site === site;
     });
+
+    //задаємо значення для змінних, щоб намалювати макаронини на сторінці ЗМІ
     a = +selectedData[0].uncertainSource + 1;
     b = +selectedData[0].nonReliableNews + 1;
     c = +selectedData[0].manipulativeHeading + 1;
@@ -60,7 +65,7 @@ var drawPage = function (site) {
     e = +selectedData[0].hateSpeech + 1;
     f = +selectedData[0].fakes + 1;
 
-
+    //додаємо текст на сторінку ЗМІ - назву, лід і опис
     d3.select('#name > h1').html(function () {
         return selectedData[0].name
     });
@@ -72,7 +77,7 @@ var drawPage = function (site) {
     });
 
 
-
+    //додаємо барчарти у лід
     $('span#highQaulityNews').css("width", function () {
         return +selectedData[0].highQaulityNews
     });
@@ -95,13 +100,14 @@ var drawPage = function (site) {
         return +selectedData[0].fakes
     });
 
+    //додаємо персоналії і їх фото
+    //1.сплітимо колонки з іменами персоналій і фото по комі
     var comma = ',';
-
     var personsArray = selectedData[0].persons.split(comma);
-
     var imagesArray = selectedData[0].images.split(comma);
     var len = personsArray.length;
 
+    //якщо персоналії були, додаємо їх у відповідний div
     if(personsArray[0].length > 2) {
         for (var i = 0; i < len; i++) {
             d3.select("#persons")
@@ -116,38 +122,50 @@ var drawPage = function (site) {
 
 
 
-/* ------ Small multiples   -------- */
+/* ------ Малюємо головну сторінку - small multiples   -------- */
 
+//ширина графіки дорівнює ширині grid-column - 70%
 var chartWidth = window.innerWidth * 0.7;
 var columns;
 
+//для маленьких екранів кількість колонок в рядку регулюється шириною екрану
 if (window.innerWidth > 1500){
     columns = 10 } else { columns = Math.floor(chartWidth / 100);
 }
 
-
+//висота в залежності від кількості колонок в рядку
 var chartHeight =  200 * (50 / columns);
 
+
+//функція, що скручує макароніни *Толя
 var curve_it = function(lineData){
     var  newLineData  = [lineData[0]];
     for(var i = 1; i < lineData.length; i++  ){
-        var phi = getRandomArbitrary(-Math.PI/50, Math.PI/50);
+        var phi = getRandomArbitrary(-Math.PI/50, Math.PI/50); //випадкове число у діапазоні
         var prev_point = lineData[i-1];
-        newLineData[i] = { x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length*Math.cos(phi) }
+        newLineData[i] = { //зсуваємо у бік від попердньої точки???
+            x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length*Math.cos(phi)
+        }
     }
     return newLineData;
 };
 
 
-// random number in any interval [min, max]
+// random number in any interval [min, max] *Толя
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
-var length = 5; //
+
+var length = 5; // відстань між точками
+
+
+//ширина та висота одного мультіпл
 var width = 100;
 var height = 200;
 //The data for our line
 
+
+// готує дані таким чином, аби вони стали path *Толя
 var prepare_data = function(d){
     var data = d.points.map(function(d, i){
         var lineData = d3.range(1, d, 2)
@@ -166,6 +184,7 @@ var prepare_data = function(d){
 var xScale = d3.scaleLinear()
     .domain([0, 7]) // input
     .range([0, width]); // output
+
 var yScale = d3.scaleLinear()
     .domain([0, 50]) // input
     .range([0, height]); // output
@@ -183,10 +202,6 @@ var svgContainer = d3.select("#small-multiples").append("svg")
     .attr("height", chartHeight);
 
 
-
-
-
-
 // Main work is here
 var main =  function (data){
     data.reverse(); // bad sites first
@@ -195,16 +210,12 @@ var main =  function (data){
         .data(data)
         .enter().append("g")
         .attr("class", "smallmult")
-        //.attr("width", width)
-        //.attr("height", height)
         .attr("transform", function(d,i){
             var xshift = (i % columns) * width;
             var yshift = ~~(i / columns) * height + 15;
             return "translate(" + xshift + "," + yshift + ")"} );
 
-
-
-
+    //визначаємо змінні, щоб по кліку на кожну макаронину виводити праворуч лінки на статті (short_url)
     var indicator;
     var media;
 
@@ -222,14 +233,16 @@ var main =  function (data){
             return d[0] ? lineFunction(d)  : '';
         })
         .on("click", function(d) {
-            // console.log(d[0].x);
+            //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
             var selectedIndicator = indicators.filter(function(obj) {
                 return obj.number === d[0].x;
             });
                 indicator = selectedIndicator[0].value;
         });
 
-
+    /* ----- PROBLEM!
+     Ідея в тому, щоб змінювати path кожні кулька секунд,
+    але вони чомусь вирівнюються при анімації і реагують на скролл(скручуюються)*/
     setInterval(function() {
         path = path.data(function (d) {
             return prepare_data(d);
@@ -243,22 +256,31 @@ var main =  function (data){
 
     }, 200);
 
+
+
+        //малюємо праву колонк головної сторінки
         boxes.on("click", function(d) {
             d3.select('#listOfLinks').selectAll("li").remove();
-            console.log(d.site);
-            $("#mediaTitle").html("<h4>"+ d.site + "</h4>");
 
+            //назву ЗМІ у відповідне поле
+            $("#mediaTitle").html("<h4>"+ d.site + "</h4>");
             media = d.site;
-            var mylist = fuckingdata.filter(function(k){
+
+            //робимо датасет із списком коротких лінків для кожного випадку
+            var mylist = shortUrlData.filter(function(k){
                 return k.site == media && k.nonobs == indicator;
             });
+
             var urls = mylist.map(function(t){
                 return t.short_url;
             });
 
+            // якщо список не порожній, виводимо назву індикатора перед ним
             if(urls.length != 0){
                 $('#selectedIndicator').html(indicator);
             }
+
+            //додаємо лінки
             for(var n=0; n < urls.length; n++) {
                 d3.select('#listOfLinks')
                     .append("li")
@@ -270,7 +292,7 @@ var main =  function (data){
 
         });
 
-
+    //
     boxes
         .append("text")
         .attr("x", width/3)
@@ -297,16 +319,14 @@ d3.csv("./data/ranking_by_sum.csv",
     });
 
 
+
+//Змінюємо кількість колонок мультіплс, коли звужується вікно
 window.addEventListener("resize", function() {
     var chartWidth = window.innerWidth * 0.7;
     var columns;
-
     if (window.innerWidth > 1500){
         columns = 10 } else { columns = Math.floor(chartWidth / 100);
     }
-
-
-
     var chartHeight =  200 * (50 / columns);
 
     var svgContainer = d3.select("svg");
@@ -321,6 +341,8 @@ window.addEventListener("resize", function() {
             return "translate(" + xshift + "," + yshift + ")"} );
 });
 
+
+//По кліку на назву ЗМІ відвриваємо сторінку конкретного ЗМІ
 $("#mediaTitle").on("click", function(){
     var siteName = $(this).text();
     d3.select("#modal").style("display", "grid");
@@ -328,6 +350,8 @@ $("#mediaTitle").on("click", function(){
     drawNoodle(siteName);
 });
 
+
+/* По кліку на &times закриваємо її*/
 $('#cross').on("click", function(){
     d3.select("#modal").style("display", "none");
 

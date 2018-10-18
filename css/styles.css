@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   margin: 0;
   padding: 0;
@@ -8,9 +9,6 @@ body {
 #main-page {
   display: grid;
   grid-template-columns: 75% 25%; }
-  @media (max-width: 800px) {
-    #main-page {
-      grid-template-columns: 55% 45%; } }
 
 #url-links {
   padding-left: 50px;
@@ -112,37 +110,9 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%); }
 
-#play {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-70%, -50%); }
-
 h3 {
   text-transform: uppercase;
   font-weight: 100; }
-
-#mediaList {
-  width: 60vw;
-  height: 100vh;
-  margin: 10vh auto 10vh auto;
-  display: block; }
-
-#limheight {
-  height: 70vh;
-  /*your fixed height*/
-  -webkit-column-count: 3;
-  -moz-column-count: 3;
-  column-count: 3;
-  /*3 in those rules is just placeholder -- can be anything*/
-  -webkit-padding-start: 0; }
-
-li {
-  display: list-item;
-  list-style-position: inside;
-  padding-bottom: 4px;
-  font-size: 18px;
-  cursor: pointer; }
 
 #noodles {
   position: relative;
@@ -163,6 +133,7 @@ h1 {
   font-size: 20px; }
 
 #persons {
+  width: 200px;
   margin: 10vh auto 0 auto; }
 
 #lead {
@@ -186,14 +157,7 @@ span {
 img {
   width: 60px; }
 
-p.personName {
-  -webkit-margin-before: 0;
-  margin-bottom: 30px; }
-
-canvas {
-  width: 100%;
-  height: 90%; }
-
+/*  текст графіка на сторінці медіа*/
 .rotate-text {
   position: absolute;
   width: 300px;
