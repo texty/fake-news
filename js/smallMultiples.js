@@ -23,6 +23,38 @@ d3.csv("./data/data2.csv",
         shortUrlData = dataset
     });
 
+
+
+//додаємо усі лінки в кінці тексту мобільної версії
+var addLinksMob = function (site) {
+    var mobUrls = shortUrlData.filter(function(k){
+        return k.site == site;
+    });
+
+    var nested_data = d3.nest()
+        .key(function(d) { return d.nonobs; })
+        .entries(mobUrls);
+
+    console.log(nested_data);
+
+    for(var i = 0; i < nested_data.length; i++){
+        var list = d3.select('#mob-urlLinks')
+            .append("ul")
+            .style("margin-bottom", "30px")
+            .html(nested_data[i].key);
+        for(var n=0; n < nested_data[i].values.length; n++){
+            list.append("li")
+                .append('a')
+                .attr("href", nested_data[i].values[n].short_url)
+                .attr("target", "_blank")
+                .html(nested_data[i].values[n].short_url);
+        }
+
+    }
+
+};
+
+
 //дані для сторінки конкретного змі
 var pageData;
 d3.csv("./data/data.csv", function(d){
@@ -288,6 +320,8 @@ var main =  function (data){
                 drawPage(media);
                 drawNoodle(media);
                 d3.select("#modal").style("display", "block");
+                addLinksMob("obozrevatel.com");
+
             }
 
             //робимо датасет із списком коротких лінків для кожного випадку
@@ -392,6 +426,8 @@ $('#cross').on("click", function(){
 $('#mob-return').on("click", function(){
     d3.select("#modal").style("display", "none");
 });
+
+
 
 
 

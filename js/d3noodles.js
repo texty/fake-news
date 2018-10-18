@@ -4,7 +4,12 @@
 drawNoodle = function(site) {
     $('#pageChart').find('svg').remove();
     var chartWidth = 380;
-    var chartHeight = window.innerHeight;
+    var chartHeight;
+    if (window.innerWidth < 800) {
+        chartHeight = window.innerHeight / 2;
+    } else {
+        chartHeight = window.innerHeight;
+    }
 
     var curve_it2 = function (lineData) {
         var newLineData = [lineData[0]];

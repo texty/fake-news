@@ -161,13 +161,16 @@ h3 {
   grid-column: 1/2;
   height: 100%;
   width: 100%; }
+  @media (max-width: 800px) {
+    #noodles {
+      height: 50%; } }
 
 #textContent {
   margin: 10% auto 100px 0;
   width: 80%; }
   @media (max-width: 800px) {
     #textContent {
-      margin: 5% auto 100px 5%;
+      margin: 5% auto 30px 5%;
       width: 90%; } }
 
 h1 {
@@ -248,5 +251,10 @@ img {
 
 #mob-return {
   cursor: pointer; }
+
+#mob-urlLinks {
+  margin: 0 0 50px 5%;
+  color: grey;
+  font-weight: 800; }
 
 /*# sourceMappingURL=styles.css.map */
