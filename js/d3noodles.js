@@ -8,7 +8,7 @@ drawNoodle = function(site) {
     if (window.innerWidth < 800) {
         chartHeight = window.innerHeight / 2;
     } else {
-        chartHeight = window.innerHeight;
+        chartHeight = window.innerHeight * 0.8;
     }
 
     var curve_it2 = function (lineData) {
@@ -63,9 +63,9 @@ drawNoodle = function(site) {
 
 
 //The SVG Container
-    var svg = d3.select("#pageChart").append("svg")
-        .attr("width", chartWidth)
-        .attr("height", chartHeight);
+var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
+            .attr("width", chartWidth)
+            .attr("height", chartHeight);
 
 
 // Main work is here
@@ -94,6 +94,41 @@ drawNoodle = function(site) {
             .attr("fill", "none")
             .attr("d", function (d) {
                 return d[0] ? lineFunction(d) : '';
+            })
+            .on("click", function(d) {
+                d3.select('#selectedIndicator').html('');
+                d3.select('#listOfLinks').html('');
+                //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
+                var selectedIndicator = indicators.filter(function(obj) {
+                    return obj.number === d[0].x;
+                });
+                    var indicator = selectedIndicator[0].value;
+
+                //робимо датасет із списком коротких лінків для кожного випадку
+                var myList = shortUrlData.filter(function(k){
+                    return k.site == site && k.nonobs == indicator;
+                });
+
+                var urls = myList.map(function(t){
+                    return t.short_url;
+                });
+
+                // якщо список не порожній, виводимо назву індикатора перед ним
+                if(urls.length != 0){
+                    $('#selectedIndicator').html(indicator);
+                } else {
+                    $('#selectedIndicator').html(" ");
+                }
+
+                //додаємо лінки
+                for(var n=0; n < urls.length; n++) {
+                    d3.select('#listOfLinks')
+                        .append("li")
+                        .append("a")
+                        .attr("href", urls[n])
+                        .attr("target", "_blank")
+                        .html(urls[n])
+                }
             });
 
         setInterval(function() {

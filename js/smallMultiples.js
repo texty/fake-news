@@ -84,7 +84,9 @@ var a, b, c, d, e, f; //змінні для макаронин на сторін
 
 
 //ця функція малює сторінку, фільтруючи дані по кліку на назву ЗМІ
-var drawPage = function (site) {    
+var drawPage = function (site) {
+
+    $('#main-page').css("display", "none");
     var selectedData = pageData.filter(function (d) {
         return d.site === site;
     });
@@ -168,16 +170,16 @@ if(selectedData[0].instead){
 //ширина графіки дорівнює ширині grid-column - 70%
 var chartWidth;
 if (window.innerWidth < 800){
-    chartWidth = window.innerWidth;
+    chartWidth = window.innerWidth * 0.9;
 } else {
-    chartWidth = window.innerWidth * 0.7;
+    chartWidth = window.innerWidth - 340;
 }
 
 
 //для маленьких екранів кількість колонок в рядку регулюється шириною екрану
 var columns;
 if (window.innerWidth > 1500){
-    columns = 10 } else { columns = Math.floor(chartWidth / 100);
+    columns = 10 } else { columns = Math.floor(chartWidth / 115);
 }
 
 //висота в залежності від кількості колонок в рядку
@@ -207,7 +209,7 @@ var length = 5; // відстань між точками
 
 
 //ширина та висота одного мультіпл
-var width = 100;
+var width = 115;
 var height = 200;
 //The data for our line
 
@@ -253,6 +255,7 @@ var svgContainer = d3.select("#small-multiples").append("svg")
 var main =  function (data){
     data.reverse(); // bad sites first
 
+    var media;
     var boxes = svgContainer.selectAll("g.smallmult")
         .data(data)
         .enter().append("g")
@@ -260,11 +263,22 @@ var main =  function (data){
         .attr("transform", function(d,i){
             var xshift = (i % columns) * width;
             var yshift = ~~(i / columns) * height + 15;
-            return "translate(" + xshift + "," + yshift + ")"} );
+            return "translate(" + xshift + "," + yshift + ")"} )
+        .on("click", function(d) {
+            console.log(this);
+            media = d.site;
+            drawPage(media);
+            drawNoodle(media);
+            if(window.innerWidth < 800) {
+                d3.select("#modal").style("display", "block");
+                addLinksMob("obozrevatel.com");
+            } else {
+                d3.select("#modal").style("display", "grid");
+        }
+    });
 
     //визначаємо змінні, щоб по кліку на кожну макаронину виводити праворуч лінки на статті (short_url)
-    var indicator;
-    var media;
+
 
     var path = boxes.selectAll("path")
         .data(function(d){
@@ -278,15 +292,15 @@ var main =  function (data){
         .attr("fill", "none")
         .attr("d", function(d){
             return d[0] ? lineFunction(d)  : '';
-        })
-        .on("click", function(d) {
-            d3.select('#selectedIndicator').html();
-            //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
-            var selectedIndicator = indicators.filter(function(obj) {
-                return obj.number === d[0].x;
-            });
-                indicator = selectedIndicator[0].value;
         });
+        // .on("click", function(d) {
+        //     // d3.select('#selectedIndicator').html();
+        //     //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
+        //     // var selectedIndicator = indicators.filter(function(obj) {
+        //     //     return obj.number === d[0].x;
+        //     // });
+        //     //     indicator = selectedIndicator[0].value;
+        // });
 
     /* ----- PROBLEM!
      Ідея в тому, щоб змінювати path кожні кулька секунд,
@@ -307,50 +321,7 @@ var main =  function (data){
 
 
         //малюємо праву колонк головної сторінки
-        boxes.on("click", function(d) {
-            d3.select('#listOfLinks').selectAll("li").remove();
 
-            //назву ЗМІ у відповідне поле
-            $("#mediaTitle").html("<h4>"+ d.site + "</h4>");
-            $("#hint").css("display", "block");
-
-            media = d.site; // key
-            
-            if(window.innerWidth < 800) {
-                drawPage(media);
-                drawNoodle(media);
-                d3.select("#modal").style("display", "block");
-                addLinksMob("obozrevatel.com");
-
-            }
-
-            //робимо датасет із списком коротких лінків для кожного випадку
-            var mylist = shortUrlData.filter(function(k){
-                return k.site == media && k.nonobs == indicator;
-            });
-
-            var urls = mylist.map(function(t){
-                return t.short_url;
-            });
-
-            // якщо список не порожній, виводимо назву індикатора перед ним
-            if(urls.length != 0){
-                $('#selectedIndicator').html(indicator);
-            } else {
-                $('#selectedIndicator').html(" ");
-            }
-
-            //додаємо лінки
-            for(var n=0; n < urls.length; n++) {
-                d3.select('#listOfLinks')
-                    .append("li")
-                    .append("a")
-                    .attr("href", urls[n])
-                    .attr("target", "_blank")
-                    .html(urls[n])
-            }
-
-        });
 
     //
     boxes
@@ -362,9 +333,10 @@ var main =  function (data){
         .attr("font-size", "0.7em")
         .attr("font-family", "Arial")
         .attr("fill", "gray")
-        .text(function(d) {
+        .attr("cursor", "pointer")
+        .text(function(d, i) {
             // console.log(d);
-            return d.site});
+            return i+1 + ". " + d.site});
 };
 
 
@@ -384,15 +356,15 @@ d3.csv("./data/ranking_by_sum.csv",
 window.addEventListener("resize", function() {
     var chartWidth;
     if (window.innerWidth < 800){
-        chartWidth = window.innerWidth;
+        chartWidth = window.innerWidth * 0.9;
     } else {
-        chartWidth = window.innerWidth * 0.7;
+        chartWidth = window.innerWidth - 340;
     }
 
 
     var columns;
     if (window.innerWidth > 1500){
-        columns = 10 } else { columns = Math.floor(chartWidth / 100);
+        columns = 10 } else { columns = Math.floor(chartWidth / 115);
     }
     var chartHeight =  200 * (50 / columns);
 
@@ -421,10 +393,14 @@ $("#mediaTitle").on("click", function(){
 /* По кліку на &times закриваємо її*/
 $('#cross').on("click", function(){
     d3.select("#modal").style("display", "none");
+    $('#main-page').css("display", "grid");
+    $('#selectedIndicator').html("");
+    $('#listOfLinks').html("");
 });
 
 $('#mob-return').on("click", function(){
     d3.select("#modal").style("display", "none");
+    $('#main-page').css("display", "block");
 });
 
 
