@@ -50,10 +50,18 @@ body {
   grid-column: 1/-1;
   grid-row: 1/2;
   margin-left: 40px;
-  width: 70%; }
+  display: grid;
+  grid-template-columns: 70% 25%;
+  grid-template-rows: auto; }
   @media (max-width: 800px) {
     #subtitle {
-      width: 80%; } }
+      width: 80%;
+      display: block !important; } }
+
+@media (min-width: 801px) {
+  #subtitleSubDiv {
+    grid-column: 1/2;
+    grid-row: 1/2; } }
 
 #subtitle > h4 {
   font-weight: 800;
@@ -62,6 +70,25 @@ body {
 #subtitle > p {
   font-size: 16px !important;
   font-weight: 800; }
+
+@media (min-width: 801px) {
+  #logo-icons {
+    grid-column: 2/3;
+    grid-row: 1/2; } }
+
+.social-icons {
+  display: flex;
+  -webkit-margin-before: 1em; }
+  @media (min-width: 801px) {
+    .social-icons {
+      float: right;
+      -webkit-margin-before: 4em; } }
+
+#facebook {
+  margin-right: 10px; }
+
+#facebook, #twitter {
+  width: 30px; }
 
 /* --- Small multiples --- */
 #small-multiples > svg {
