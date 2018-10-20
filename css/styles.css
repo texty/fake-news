@@ -15,10 +15,11 @@ body {
   overflow: hidden; }
 
 #firstScreen > svg {
-  margin-left: 150px;
+  margin-left: calc(100vw/4);
   margin-top: -40px; }
 
 #projectTitle {
+  text-align: center;
   text-transform: uppercase;
   font-family: ExposureCTwo, serif;
   font-weight: 800;
@@ -27,6 +28,12 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); }
+
+#closeFirstScreen {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-80%, -50%); }
 
 #main-page {
   max-width: 100vw;
@@ -298,7 +305,7 @@ h1 {
 span#highQaulityNews {
   background-color: #bfbfbf !important; }
 
-#textContent > span:not(#curvingArrow):not(#curvingArrow-modal) {
+span:not(#curvingArrow):not(#curvingArrow-modal):not(#modalHintArrow):not(#methodologySpan) {
   display: inline-block;
   background-color: #ffdd19;
   height: 10px; }

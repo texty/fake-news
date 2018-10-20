@@ -26,7 +26,7 @@
 <body>
 <div id="firstScreen">
     <div id="projectTitle">Антирейтинг новин</div>
-
+    <div id="closeFirstScreen"><img style="cursor:pointer" src="img/down-arrow.png"/></div>
 
 </div>
 
@@ -60,7 +60,7 @@
 
         <!-- Методологія -->
         <div id="metodology" >
-            <h4><span>Методологія</span></h4>
+            <h4><span id="methodologySpan">Методологія</span></h4>
             <p class="hidden">Ми скачали усі стрічки новин із зазначених сайтів за один тиждень. Потім зробили з них випадкову вибірку зі 100 новин для кожного сайту. Кожному відібрану новину промаркували як достовірну або ж таку, що містить різні види маніпуляції (може бути декілька), далі підбили підсумки. Кожнму виду маніпуляції ми присвоїли різну вагу: Недостовірна новина - 2, Ненадійне джерело - 1, Маніпуляції з заголовком - 2, маніпуляції з емоціями - 3, Мова ворожнечі - 4, Фейк - 5. Для кожного сайту рахували відстань (косинусну дистанцію) між ідеальною ситуацією коли всі 100 новин достовірні та розподілом різних видів маніпуляції.  За цією відстанню побудували рейтинг сайтів.</p>
         </div>
 
@@ -133,8 +133,9 @@
 <!--<script src="lib/d3.v3.min.js"></script>-->
 <script type="text/javascript" src="lib/d3.js"></script>
 <script type="text/javascript" src="js/d3noodles.js"></script>
-<script type="text/javascript" src="js/smallMultiples.js"></script>
 <script type="text/javascript" src="js/firstScreen.js"></script>
+
+<script type="text/javascript" src="js/smallMultiples.js"></script>
 
 
 <script>
@@ -142,6 +143,12 @@
 $('#metodology > h4 span ').on('click', function(){
     $('#metodology > p').toggleClass("hidden");
 
+});
+
+
+$('#closeFirstScreen').on('click', function(){
+    $('#firstScreen').css("display", "none");
+    $('#main-page').css("display", "grid");
 })
 
 </script>

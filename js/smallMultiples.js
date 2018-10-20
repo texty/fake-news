@@ -248,7 +248,8 @@ var lineFunction = d3.line()
 //The SVG Container
 var svgContainer = d3.select("#small-multiples").append("svg")
     .attr("width", chartWidth)
-    .attr("height", chartHeight);
+    .attr("height", chartHeight)
+    .attr("id", "sm-svg");
 
 
 // Main work is here
@@ -368,7 +369,7 @@ window.addEventListener("resize", function() {
     }
     var chartHeight =  200 * (50 / columns);
 
-    var svgContainer = d3.select("svg");
+    var svgContainer = d3.select("svg#sm-svg");
     svgContainer
         .attr("width", chartWidth)
         .attr("height", chartHeight);

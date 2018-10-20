@@ -1,14 +1,14 @@
 /**
  * Created by yevheniia on 19.10.18.
  */
-var curve_it2 = function (lineData) {
-    var newLineData = [lineData[0]];
-    for (var i = 1; i < lineData.length; i++) {
+var curve_it3 = function (FSlineData) {
+    var FSnewLineData = [FSlineData[0]];
+    for (var i = 1; i < FSlineData.length; i++) {
         var phi = getRandomArbitrary(-Math.PI / 30, Math.PI / 30);
-        var prev_point = lineData[i - 1];
-        newLineData[i] = {x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length * Math.cos(phi)}
+        var prev_point = FSlineData[i - 1];
+        FSnewLineData[i] = {x: prev_point.x + FSlength * Math.sin(phi), y: prev_point.y + FSlength * Math.cos(phi)}
     }
-    return newLineData;
+    return FSnewLineData;
 };
 
 
@@ -17,88 +17,102 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-var length = 4; //
+var FSlength = 5; //
+var FSheight = window.innerHeight;
+var FSwidth = 600;
+
 
 var prepare_pointsData = function (d) {
     var ddd = d.map(function (d, i) {
-        var lineData = d3.range(1, d, 2)
+        var FSlineData = d3.range(1, d, 2)
             .map(function (d) {
                 return {x: (i + 1), y: d}
             });
-        return curve_it2(lineData);
+        return curve_it3(FSlineData);
 
 
     });
     return ddd;
 };
 
-var xScale = d3.scaleLinear()
-    .domain([0, 45]) // input
-    .range([0, chartWidth]); // output
+var FSxScale = d3.scaleLinear()
+    .domain([0, 35]) // input
+    .range([0, FSwidth]); // output
 
-var yScale = d3.scaleLinear()
+var FSyScale = d3.scaleLinear()
     .domain([0, 50]) // input
-    .range([0, chartHeight]); // output
+    .range([0, FSheight]); // output
 
-var lineFunction = d3.line()
+var FSlineFunction = d3.line()
     .x(function (d) {
-        return xScale(d.x);
+        return FSxScale(d.x);
     })
     .y(function (d) {
-        return yScale(d.y);
+        return FSyScale(d.y);
     });
 
-var fSHeight = window.innerHeight;
 
 var firstScreenSVG = d3.select("#firstScreen").append("svg")
-    .attr("width", chartWidth )
-    .attr("height", fSHeight);
+    .attr("width", FSwidth )
+    .attr("height", FSheight)
+    .style("margin-left", function() {
+        return (window.innerWidth - 600)/2
+    });
 
-var mainChart =  function (points) {
-
-
-    var box = firstScreenSVG
-        .append("g")
-        .attr("width", chartWidth - 100)
-        .attr("height", fSHeight);
+var FSchart =  function (FSpoints) {
 
 
-    var noodlesPath = box.selectAll("path")
+    var FSbox = firstScreenSVG.append("g")
+        .attr("width", FSwidth - 100)
+        .attr("height", FSheight);
+
+
+    var noodlesPath = FSbox.selectAll("path")
         .data(function () {
-            return prepare_pointsData(points);
+            return prepare_pointsData(FSpoints);
         })
         .enter().append("path")
         .attr("stroke", "gold")
         .attr("stroke-width", 12)
-        .attr("class", "line")
         .attr("stroke-linecap", "round")
         .attr("fill", "none")
         .attr("d", function (d) {
-            return d[0] ? lineFunction(d) : '';
+            return d[0] ? FSlineFunction(d) : '';
         });
 
     setInterval(function() {
         noodlesPath = noodlesPath.data(function () {
-            return prepare_pointsData(points);
+            return prepare_pointsData(FSpoints);
         });
 
         // Since this is created before enter.append, it only applies to updating nodes.
         noodlesPath.transition()
             .duration(750)
             .attr("d", function(d){
-                return d[0] ? lineFunction(d)  : '';})
+                return d[0] ? FSlineFunction(d)  : '';})
 
     }, 200);
+
+
+    window.addEventListener("resize", function(){
+        firstScreenSVG
+            .attr("width", FSwidth )
+            .attr("height", FSheight)
+            .style("margin-left", function() {
+                return (window.innerWidth - 600)/2
+            });
+    })
 };
 
 
 
-   // var points =  [2,11,4,8,14,13,18,3,9,10,7,20,25,19,10,4,0,16,10,18,6  ];
-    var points = randomDataSet(40, 5, 24);
-    mainChart(points);
+    var FSpoints = [4,25,0,6,15,8,7,4,19,24,32,34,40,35,13,38,44,16,40,35,13,7,5, 27,30,26,15,4,18,5,8,4,0,5];
 
-function randomDataSet(dataSetSize, minValue, maxValue) {
-    return new Array(dataSetSize).fill(0).map(function(n) {
-        return Math.round(Math.random() * (maxValue - minValue) + minValue);
-    });
-}
+    // var FSpoints = randomDataSet(40, 5, 24);
+    FSchart(FSpoints);
+
+// function randomDataSet(dataSetSize, minValue, maxValue) {
+//     return new Array(dataSetSize).fill(0).map(function(n) {
+//         return Math.round(Math.random() * (maxValue - minValue) + minValue);
+//     });
+// }
