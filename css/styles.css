@@ -19,6 +19,7 @@ body {
   margin-top: -40px; }
 
 #projectTitle {
+  color: #1d1d1d;
   text-align: center;
   text-transform: uppercase;
   font-family: ExposureCTwo, serif;
