@@ -24,6 +24,9 @@ var FSwidth;
 if (window.innerWidth > 2000){
     FSwidth = 900;
 }
+else if (screen.width < 800){
+    FSwidth = screen.width;
+}
 else {
     FSwidth = 600;
 }
@@ -65,6 +68,8 @@ var firstScreenSVG = d3.select("#firstScreen").append("svg")
     .style("margin-left", function() {
         if (window.innerWidth > 2000) {
             return (window.innerWidth - 900) / 2
+        } else if (screen.width < 800){
+            return 0;
         }
         else {
             return (window.innerWidth - 600) / 2
@@ -85,7 +90,15 @@ var FSchart =  function (FSpoints) {
         })
         .enter().append("path")
         .attr("stroke", "gold")
-        .attr("stroke-width", 12)
+        .attr("stroke-width", function (d) {
+            if(screen.width < 800){
+                return 6
+            }
+            else {
+                return  12
+            }
+
+        })
         .attr("stroke-linecap", "round")
         .attr("fill", "none")
         .attr("d", function (d) {
