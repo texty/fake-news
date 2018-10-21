@@ -14,8 +14,7 @@ body {
 
 #firstScreen {
   width: 100vw;
-  height: 100vh;
-  overflow: hidden; }
+  height: 100vh; }
 
 #firstScreen > svg {
   margin-left: calc(100vw/4);
@@ -45,7 +44,7 @@ body {
 #main-page {
   max-width: 1500px;
   margin: auto;
-  display: none;
+  display: grid;
   grid-template-columns: 300px auto;
   grid-template-rows: auto auto; }
   @media (max-width: 800px) {
