@@ -193,7 +193,7 @@ var chartHeight =  200 * (50 / columns);
 var curve_it = function(lineData){
     var  newLineData  = [lineData[0]];
     for(var i = 1; i < lineData.length; i++  ){
-        var phi = getRandomArbitrary(-Math.PI/50, Math.PI/50); //випадкове число у діапазоні
+        var phi = getRandomArbitrary(-Math.PI/150, Math.PI/150); //випадкове число у діапазоні
         var prev_point = lineData[i-1];
         newLineData[i] = { //зсуваємо у бік від попердньої точки???
             x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length*Math.cos(phi)
@@ -309,18 +309,18 @@ var main =  function (data){
     /* ----- PROBLEM!
      Ідея в тому, щоб змінювати path кожні кулька секунд,
     але вони чомусь вирівнюються при анімації і реагують на скролл(скручуюються)*/
-    setInterval(function() {
-        path = path.data(function (d) {
-            return prepare_data(d);
-        });
-
-        // Since this is created before enter.append, it only applies to updating nodes.
-        path.transition()
-            .duration(750)
-            .attr("d", function(d){
-                return d[0] ? lineFunction(d)  : '';})
-
-    }, 200);
+    // setInterval(function() {
+    //     path = path.data(function (d) {
+    //         return prepare_data(d);
+    //     });
+    //
+    //     // Since this is created before enter.append, it only applies to updating nodes.
+    //     path.transition()
+    //         .duration(750)
+    //         .attr("d", function(d){
+    //             return d[0] ? lineFunction(d)  : '';})
+    //
+    // }, 200);
 
 
 
