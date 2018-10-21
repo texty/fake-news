@@ -107,5 +107,24 @@
 
 </ol>
 </div>
+<script src="lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="lib/d3.js"></script>
+
+<script>
+   var PMlist = d3.selectAll('ol#columnList li');
+    for(var i = 0; i < PMlist._groups[0].length; i++){
+        var theLink = PMlist._groups[0][i].innerHTML;
+        console.log(theLink);
+        d3.select(PMlist._groups[0][i]).html('');
+        d3.select(PMlist._groups[0][i]).append("a")
+                .attr("href", function() {
+                    return "http://"+ theLink
+                })
+                .attr("target", "_blank")
+                .attr("class", "popularMedia")
+                .html(theLink);
+    }
+
+</script>
 </body>
 </html>

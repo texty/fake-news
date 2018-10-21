@@ -255,6 +255,9 @@ p#modalHint {
   max-width: 100%;
   padding-left: 40px; }
 
+#listOfLinks {
+  margin-bottom: 50px; }
+
 #cross {
   color: grey;
   cursor: pointer;
@@ -425,5 +428,12 @@ ol#columnList {
 ol#columnList li {
   display: list-item;
   list-style-position: inside; }
+
+a.popularMedia {
+  color: grey;
+  text-decoration: none; }
+
+a.popularMedia:hover {
+  text-decoration: underline; }
 
 /*# sourceMappingURL=styles.css.map */
