@@ -275,7 +275,8 @@ var main =  function (data){
             drawNoodle(media);
             if(window.innerWidth < 800) {
                 d3.select("#modal").style("display", "block");
-                addLinksMob("obozrevatel.com");
+                addLinksMob(media);
+                d3.select("#firstScreen").style("display", "none");
             } else {
                 d3.select("#modal").style("display", "grid");
         }
@@ -400,11 +401,15 @@ $('#cross').on("click", function(){
     $('#main-page').css("display", "grid");
     $('#selectedIndicator').html("");
     $('#listOfLinks').html("");
+    $('html,body').animate({
+        scrollTop: $('#main-page').offset().top }, 1, "linear");
 });
 
 $('#mob-return').on("click", function(){
     d3.select("#modal").style("display", "none");
     $('#main-page').css("display", "block");
+    $('html,body').animate({
+        scrollTop: $('#main-page').offset().top }, 1, "linear");
 });
 
 

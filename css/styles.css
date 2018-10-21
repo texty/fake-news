@@ -217,6 +217,7 @@ ul {
 
 /* modal Media Page*/
 #modal {
+  min-height: 100vh;
   display: none;
   position: absolute;
   top: 0;
