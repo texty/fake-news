@@ -171,7 +171,10 @@ if(selectedData[0].instead){
 var chartWidth;
 if (window.innerWidth < 800){
     chartWidth = window.innerWidth * 0.9;
-} else {
+} else if (window.innerWidth > 2000){
+    chartWidth = 1200;
+}
+else {
     chartWidth = window.innerWidth - 340;
 }
 

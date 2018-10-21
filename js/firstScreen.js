@@ -19,7 +19,14 @@ function getRandomArbitrary(min, max) {
 
 var FSlength = 5; //
 var FSheight = window.innerHeight;
-var FSwidth = 600;
+
+var FSwidth;
+if (window.innerWidth > 2000){
+    FSwidth = 900;
+}
+else {
+    FSwidth = 600;
+}
 
 
 var prepare_pointsData = function (d) {
@@ -56,7 +63,12 @@ var firstScreenSVG = d3.select("#firstScreen").append("svg")
     .attr("width", FSwidth )
     .attr("height", FSheight)
     .style("margin-left", function() {
-        return (window.innerWidth - 600)/2
+        if (window.innerWidth > 2000) {
+            return (window.innerWidth - 900) / 2
+        }
+        else {
+            return (window.innerWidth - 600) / 2
+        }
     });
 
 var FSchart =  function (FSpoints) {
