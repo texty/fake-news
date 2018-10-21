@@ -96,38 +96,40 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                 return d[0] ? lineFunction(d) : '';
             })
             .on("click", function(d) {
-                d3.select('#selectedIndicator').html('');
-                d3.select('#listOfLinks').html('');
-                //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
-                var selectedIndicator = indicators.filter(function(obj) {
-                    return obj.number === d[0].x;
-                });
+                if(window.innerWidth >= 800) {
+                    d3.select('#selectedIndicator').html('');
+                    d3.select('#listOfLinks').html('');
+                    //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
+                    var selectedIndicator = indicators.filter(function (obj) {
+                        return obj.number === d[0].x;
+                    });
                     var indicator = selectedIndicator[0].value;
 
-                //робимо датасет із списком коротких лінків для кожного випадку
-                var myList = shortUrlData.filter(function(k){
-                    return k.site == site && k.nonobs == indicator;
-                });
+                    //робимо датасет із списком коротких лінків для кожного випадку
+                    var myList = shortUrlData.filter(function (k) {
+                        return k.site == site && k.nonobs == indicator;
+                    });
 
-                var urls = myList.map(function(t){
-                    return t.short_url;
-                });
+                    var urls = myList.map(function (t) {
+                        return t.short_url;
+                    });
 
-                // якщо список не порожній, виводимо назву індикатора перед ним
-                if(urls.length != 0){
-                    $('#selectedIndicator').html(indicator);
-                } else {
-                    $('#selectedIndicator').html(" ");
-                }
+                    // якщо список не порожній, виводимо назву індикатора перед ним
+                    if (urls.length != 0) {
+                        $('#selectedIndicator').html(indicator);
+                    } else {
+                        $('#selectedIndicator').html(" ");
+                    }
 
-                //додаємо лінки
-                for(var n=0; n < urls.length; n++) {
-                    d3.select('#listOfLinks')
-                        .append("li")
-                        .append("a")
-                        .attr("href", urls[n])
-                        .attr("target", "_blank")
-                        .html(urls[n])
+                    //додаємо лінки
+                    for (var n = 0; n < urls.length; n++) {
+                        d3.select('#listOfLinks')
+                            .append("li")
+                            .append("a")
+                            .attr("href", urls[n])
+                            .attr("target", "_blank")
+                            .html(urls[n])
+                    }
                 }
             });
 
