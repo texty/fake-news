@@ -113,13 +113,13 @@ body {
 /* ---- main page left side----*/
 #legend {
   width: 300px;
-  margin-top: 50px;
+  margin-top: 80px;
   transform: rotate(-90deg);
-  margin-left: -50px; }
+  margin-left: -70px; }
 
 .legend {
   text-align: right;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: gold;
   letter-spacing: 1px;
   font-weight: 800;
@@ -459,14 +459,15 @@ img {
   font-weight: 800; }
 
 .donors {
-  margin-top: 100px; }
+  float: right;
+  margin: 0 50px 50px 0; }
   @media (max-width: 800px) {
     .donors {
-      margin: 50px auto;
+      margin: 50px;
       width: 80%; } }
   @media (min-width: 2000px) {
     .donors {
-      margin: 50px auto; } }
+      margin: -50px 0 50px 0; } }
 
 /*---- List of Popular Media ----*/
 ol#columnList {
@@ -494,6 +495,11 @@ a.popularMedia {
   text-decoration: none; }
 
 a.popularMedia:hover {
+  text-decoration: underline; }
+
+a:-webkit-any-link {
+  color: #4094ec;
+  cursor: pointer;
   text-decoration: underline; }
 
 /*# sourceMappingURL=styles.css.map */

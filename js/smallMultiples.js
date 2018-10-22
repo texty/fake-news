@@ -266,7 +266,7 @@ var lineFunction = d3.line()
 
 
 //The SVG Container
-var svgContainer = d3.select("#small-multiples").append("svg")
+var svgContainer = d3.select("#small-multiples").insert("svg", ".donors")
     .attr("width", chartWidth)
     .attr("height", chartHeight)
     .attr("id", "sm-svg");
