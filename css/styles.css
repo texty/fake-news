@@ -463,8 +463,7 @@ img {
   margin: 0 50px 50px 0; }
   @media (max-width: 800px) {
     .donors {
-      margin: 50px;
-      width: 80%; } }
+      margin-left: 10px; } }
   @media (min-width: 2000px) {
     .donors {
       margin: -50px 0 50px 0; } }
