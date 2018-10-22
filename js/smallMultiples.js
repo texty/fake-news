@@ -420,6 +420,13 @@ window.addEventListener("resize", function() {
             var xshift = (i % columns) * width;
             var yshift = ~~(i / columns) * height + 15;
             return "translate(" + xshift + "," + yshift + ")"} );
+
+    if(window.innerWidth > 800) {
+        $('#modal').css("display", "grid")
+    }
+    if(window.innerWidth < 800 || screen.width < 800) { 
+        $('#modal').css("display", "block")
+    }
 });
 
 
