@@ -169,8 +169,8 @@ if(selectedData[0].instead){
 
 //ширина графіки дорівнює ширині grid-column - 70%
 var chartWidth;
-if (window.innerWidth < 800){
-    chartWidth = window.innerWidth * 0.95;
+if (screen.width < 800){
+    chartWidth = screen.width * 0.95;
 } else if (window.innerWidth > 2000){
     chartWidth = 1200;
 }
@@ -360,8 +360,8 @@ d3.csv("./data/ranking_by_sum.csv",
 //Змінюємо кількість колонок мультіплс, коли звужується вікно
 window.addEventListener("resize", function() {
     var chartWidth;
-    if (window.innerWidth < 800){
-        chartWidth = window.innerWidth * 0.95;
+    if (screen.width < 800){
+        chartWidth = screen.width * 0.95;
     } else {
         chartWidth = window.innerWidth - 340;
     }

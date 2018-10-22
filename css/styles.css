@@ -415,6 +415,9 @@ img {
     .donors {
       margin: 50px auto;
       width: 80%; } }
+  @media (min-width: 2000px) {
+    .donors {
+      margin: 50px auto; } }
 
 /*---- List of Popular Media ----*/
 ol#columnList {

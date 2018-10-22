@@ -90,7 +90,7 @@ var FSchart =  function (FSpoints) {
         .enter().append("path")
         .attr("stroke", "gold")
         .attr("stroke-width", function (d) {
-            if(screen.width < 800){
+            if(screen.width < 768){
                 return 6
             }
             else {
