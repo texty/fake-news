@@ -150,7 +150,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                 .attr("d", function(d){
                     return d[0] ? lineFunction(d)  : '';})
 
-        }, 200);
+        }, 300);
         
         
         

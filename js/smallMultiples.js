@@ -290,10 +290,16 @@ var main =  function (data){
             media = d.site;
             drawPage(media);
             drawNoodle(media);
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+
             if(window.innerWidth < 800) {
                 d3.select("#modal").style("display", "block");
                 addLinksMob(media);
                 d3.select("#firstScreen").style("display", "none");
+                $('html,body').animate({
+                    scrollTop: $('#modal').offset().top }, 1, "linear");
             } else {
                 d3.select("#modal").style("display", "grid");
                 $('html,body').animate({

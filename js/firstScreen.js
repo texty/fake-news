@@ -115,7 +115,7 @@ var FSchart =  function (FSpoints) {
             .attr("d", function(d){
                 return d[0] ? FSlineFunction(d)  : '';})
 
-    }, 200);
+    }, 400);
 
 
     window.addEventListener("resize", function(){
