@@ -128,13 +128,14 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                     }
 
                     //додаємо лінки
-                    for (var n = 1; n <= urls.length; n++) {
+                    for (var n = 0; n < urls.length; n++) {
+                        var s = n+1;
                         d3.select('#listOfLinks')
                             .append("li")
                             .append("a")
                             .attr("href", urls[n])
                             .attr("target", "_blank")
-                            .html(n)
+                            .html(s)
                     }
                 }
             });
