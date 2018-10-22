@@ -13,6 +13,11 @@ var indicators = [
     {"number":6, "value":"Ненадійне джерело інформації"}
 ];
 
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 //дані з короткими url, які відкриваються по кліку на макаронину
 var shortUrlData;
 d3.csv("./data/data2.csv",
@@ -94,7 +99,7 @@ if(selectedData[0].instead){
     d3.select("#persons").html(selectedData[0].instead);
 }
     else {
-    d3.select("#persons").html(" <p><b>Було зафіксовано публікації з ознаками замовлення щодо:</b></p>");
+    d3.select("#persons").html(" <p style='margin-bottom:30px;'><b>Було зафіксовано публікації з ознаками замовлення щодо:</b></p>");
 
 }
     
@@ -155,7 +160,7 @@ if(selectedData[0].instead){
             d3.select("#persons")
                 .append("div")
                 .html(function () {
-                    return "<img src='img/" + imagesArray[i] + "'/><p class='personName'>" + personsArray[i] + "</p>"
+                    return "<img src='img/" + imagesArray[i] + "'/><p class='personName others'>" + personsArray[i] + "</p>"
                 })
         }
     }
@@ -297,15 +302,27 @@ var main =  function (data){
         .attr("fill", "none")
         .attr("d", function(d){
             return d[0] ? lineFunction(d)  : '';
-        });
-        // .on("click", function(d) {
+        })
+        .on("mouseover", function(d) {
         //     // d3.select('#selectedIndicator').html();
         //     //у даних для мултіплс є лише порядок по вісі х, переводимо рядок в значення індикатор
-        //     // var selectedIndicator = indicators.filter(function(obj) {
-        //     //     return obj.number === d[0].x;
-        //     // });
-        //     //     indicator = selectedIndicator[0].value;
-        // });
+            var selectedIndicator = indicators.filter(function(obj) {
+                return obj.number === d[0].x;
+            });
+                var indicator = selectedIndicator[0].value;
+
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.html(indicator)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 35) + "px");
+        })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
     /* ----- PROBLEM!
      Ідея в тому, щоб змінювати path кожні кулька секунд,
@@ -337,11 +354,11 @@ var main =  function (data){
         .attr("text-anchor", "start")
         .attr("font-size", "0.7em")
         .attr("font-family", "Arial")
-        .attr("fill", "gray")
+        // .attr("fill", "black")
         .attr("cursor", "pointer")
-        .text(function(d, i) {
-            // console.log(d);
-            return i+1 + ". " + d.site});
+        .html(function(d, i) {
+            var n = i + 1;
+            return  "<tspan style='fill:gold'>" + n + ") </tspan> " + d.site});
 };
 
 

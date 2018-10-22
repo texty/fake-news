@@ -3,7 +3,12 @@
  */
 drawNoodle = function(site) {
     $('#pageChart').find('svg').remove();
-    var chartWidth = 380;
+    var chartWidth;
+    if(screen.width < 380) {
+        chartWidth = screen.width
+    } else {
+        chartWidth = 380
+    }
     var chartHeight;
     if (window.innerWidth < 800) {
         chartHeight = window.innerHeight / 2;
@@ -116,7 +121,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
 
                     // якщо список не порожній, виводимо назву індикатора перед ним
                     if (urls.length != 0) {
-                        $('#selectedIndicator').html(indicator);
+                        $('#selectedIndicator').html(indicator + "<br>(приклади новин)");
                     } else {
                         $('#selectedIndicator').html(" ");
                     }
@@ -128,7 +133,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                             .append("a")
                             .attr("href", urls[n])
                             .attr("target", "_blank")
-                            .html(urls[n])
+                            .html(n)
                     }
                 }
             });
