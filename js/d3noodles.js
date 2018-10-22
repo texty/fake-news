@@ -19,7 +19,8 @@ drawNoodle = function(site) {
     var curve_it2 = function (lineData) {
         var newLineData = [lineData[0]];
         for (var i = 1; i < lineData.length; i++) {
-            var phi = getRandomArbitrary(-Math.PI / 150, Math.PI / 150);
+            // var phi = getRandomArbitrary(-Math.PI / 150, Math.PI / 150);
+            var phi = getRandomArbitrary(-Math.PI/35, Math.PI/35);
             var prev_point = lineData[i - 1];
             newLineData[i] = {x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length * Math.cos(phi)}
         }
@@ -32,13 +33,13 @@ drawNoodle = function(site) {
         return Math.random() * (max - min) + min;
     }
 
-    var length = 10; //
+    var length = 1; //
 
 //The data for our line
 
     var prepare_pageData = function (d) {
         var data = d[0].points.map(function (d, i) {
-            var lineData = d3.range(1, d, 2)
+            var lineData = d3.range(0, d)
                 .map(function (d) {
                     return {x: (i + 1), y: d}
                 });
@@ -127,7 +128,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                     }
 
                     //додаємо лінки
-                    for (var n = 0; n < urls.length; n++) {
+                    for (var n = 1; n <= urls.length; n++) {
                         d3.select('#listOfLinks')
                             .append("li")
                             .append("a")

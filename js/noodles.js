@@ -29,7 +29,7 @@ function getRandomArbitrary(min, max) {
         for (var i = 1; i < points; i++) {
             var segment = path.segments[i - 1];
             var prev_point = segment.point;
-            phi = getRandomArbitrary(-Math.PI / 25, Math.PI / 25);
+            phi = getRandomArbitrary(-Math.PI / 35, Math.PI / 35);
             if (i == points) { // last point
                 path.add(new Point(start.x, prev_point.y + length));
             } else { // for all points except last one, tilt segment with some randome angle

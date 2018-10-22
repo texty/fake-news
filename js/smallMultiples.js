@@ -198,7 +198,8 @@ var chartHeight =  200 * (50 / columns);
 var curve_it = function(lineData){
     var  newLineData  = [lineData[0]];
     for(var i = 1; i < lineData.length; i++  ){
-        var phi = getRandomArbitrary(-Math.PI/150, Math.PI/150); //випадкове число у діапазоні
+        // var phi = getRandomArbitrary(-Math.PI/150, Math.PI/150); //випадкове число у діапазоні
+        var phi = getRandomArbitrary(-Math.PI/35, Math.PI/35);
         var prev_point = lineData[i-1];
         newLineData[i] = { //зсуваємо у бік від попердньої точки???
             x: prev_point.x + length * Math.sin(phi), y: prev_point.y + length*Math.cos(phi)
@@ -213,7 +214,7 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-var length = 5; // відстань між точками
+var length = 1; // відстань між точками
 
 
 //ширина та висота одного мультіпл
@@ -223,15 +224,26 @@ var height = 200;
 
 
 // готує дані таким чином, аби вони стали path *Толя
-var prepare_data = function(d){
-    var data = d.points.map(function(d, i){
-        var lineData = d3.range(1, d, 2)
-            .map(function(d){
-                return {x:(i+1), y:d}
+// var prepare_data = function(d){
+//     var data = d.points.map(function(d, i){
+//         var lineData = d3.range(1, d, 2)
+//             .map(function(d){
+//                 return {x:(i+1), y:d}
+//             });
+//         return curve_it(lineData);
+//
+//
+//     });
+//     return data;
+// };
+
+var prepare_data = function(d) {
+    var data = d.points.map(function (d, i) {
+        var lineData = d3.range(0, d)
+            .map(function (d) {
+                return {x: (i + 1), y: d}
             });
         return curve_it(lineData);
-
-
     });
     return data;
 };
@@ -284,6 +296,8 @@ var main =  function (data){
                 d3.select("#firstScreen").style("display", "none");
             } else {
                 d3.select("#modal").style("display", "grid");
+                $('html,body').animate({
+                    scrollTop: $('#modal').offset().top }, 1, "linear");
         }
     });
 
@@ -296,7 +310,7 @@ var main =  function (data){
         })
         .enter().append("path")
         .attr("stroke", "gold")
-        .attr("stroke-width", 7)
+        .attr("stroke-width", 6)
         .attr("class", "line")
         .attr("stroke-linecap", "round")
         .attr("fill", "none")
@@ -314,7 +328,7 @@ var main =  function (data){
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
-            div.html(indicator)
+            div.html(indicator.toLowerCase())
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 35) + "px");
         })

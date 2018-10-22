@@ -354,7 +354,7 @@ h3 {
 
 #textContent-down {
   width: 80%;
-  margin: 20px auto 100px 0;
+  margin: 0 auto 100px 0;
   grid-column: 2/3;
   grid-row: 2/3; }
   @media (max-width: 800px) {

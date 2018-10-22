@@ -4,7 +4,7 @@
 var curve_it3 = function (FSlineData) {
     var FSnewLineData = [FSlineData[0]];
     for (var i = 1; i < FSlineData.length; i++) {
-        var phi = getRandomArbitrary(-Math.PI / 30, Math.PI / 30);
+        var phi = getRandomArbitrary(-Math.PI/35, Math.PI/35);
         var prev_point = FSlineData[i - 1];
         FSnewLineData[i] = {x: prev_point.x + FSlength * Math.sin(phi), y: prev_point.y + FSlength * Math.cos(phi)}
     }
@@ -17,7 +17,7 @@ function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-var FSlength = 5; //
+var FSlength = 1; //
 var FSheight = window.innerHeight;
 
 var FSwidth;
@@ -34,7 +34,7 @@ else {
 
 var prepare_pointsData = function (d) {
     var ddd = d.map(function (d, i) {
-        var FSlineData = d3.range(1, d, 2)
+        var FSlineData = d3.range(0, d)
             .map(function (d) {
                 return {x: (i + 1), y: d}
             });
