@@ -147,6 +147,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
             // Since this is created before enter.append, it only applies to updating nodes.
             pagePath.transition()
                 .duration(750)
+                .ease(d3.easeSin)
                 .attr("d", function(d){
                     return d[0] ? lineFunction(d)  : '';})
 

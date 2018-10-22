@@ -4,7 +4,7 @@
 var curve_it3 = function (FSlineData) {
     var FSnewLineData = [FSlineData[0]];
     for (var i = 1; i < FSlineData.length; i++) {
-        var phi = getRandomArbitrary(-Math.PI/35, Math.PI/35);
+        var phi = getRandomArbitrary(-Math.PI/25, Math.PI/25);
         var prev_point = FSlineData[i - 1];
         FSnewLineData[i] = {x: prev_point.x + FSlength * Math.sin(phi), y: prev_point.y + FSlength * Math.cos(phi)}
     }
@@ -110,12 +110,14 @@ var FSchart =  function (FSpoints) {
         });
 
         // Since this is created before enter.append, it only applies to updating nodes.
-        noodlesPath.transition()
+        noodlesPath
+            .transition()
             .duration(750)
+            .ease(d3.easeSin)
             .attr("d", function(d){
                 return d[0] ? FSlineFunction(d)  : '';})
 
-    }, 400);
+    }, 750);
 
 
     window.addEventListener("resize", function(){
