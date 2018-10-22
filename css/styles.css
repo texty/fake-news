@@ -409,6 +409,13 @@ img {
   color: grey;
   font-weight: 800; }
 
+.donors {
+  margin-top: 100px; }
+  @media (max-width: 800px) {
+    .donors {
+      margin: 50px auto;
+      width: 80%; } }
+
 /*---- List of Popular Media ----*/
 ol#columnList {
   columns: 4;

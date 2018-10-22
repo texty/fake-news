@@ -70,8 +70,7 @@ var firstScreenSVG = d3.select("#firstScreen").append("svg")
             return (window.innerWidth - 900) / 2
         } else if (screen.width < 800){
             return 0;
-        }
-        else {
+        } else {
             return (window.innerWidth - 600) / 2
         }
     });
@@ -120,12 +119,62 @@ var FSchart =  function (FSpoints) {
 
 
     window.addEventListener("resize", function(){
+        var FSheight;
+        var FSwidth;
+
+        if (window.innerWidth > 2000){
+            FSwidth = 900;
+            FSheight = window.innerHeight;
+        }
+        else if (screen.width < 800){
+            FSwidth = screen.width;
+            FSheight = screen.height;
+        }
+        else {
+            FSwidth = 600;
+            FSheight = window.innerHeight;
+        }
+        var FSxScale = d3.scaleLinear()
+            .domain([0, 35]) // input
+            .range([0, FSwidth]); // output
+
+
+        var FSyScale = d3.scaleLinear()
+            .domain([0, 50]) // input
+            .range([0, FSheight]); // output
+
+        var FSlineFunction = d3.line()
+            .x(function (d) {
+                return FSxScale(d.x);
+            })
+            .y(function (d) {
+                return FSyScale(d.y);
+            });
+
+
         firstScreenSVG
             .attr("width", FSwidth )
             .attr("height", FSheight)
             .style("margin-left", function() {
-                return (window.innerWidth - 600)/2
+                if (window.innerWidth > 2000) {
+                    return (window.innerWidth - 900) / 2
+                } else if (screen.width < 800){
+                    return 0;
+                } else {
+                    return (window.innerWidth - 600) / 2
+                }
             });
+
+        noodlesPath
+            .attr("d", function (d) {
+            return d[0] ? FSlineFunction(d) : '';
+        })
+            .attr("stroke-width", function () {
+                if(screen.width < 800){ return 6  }
+                else { return  12 }
+
+            })
+
     })
 };
 
