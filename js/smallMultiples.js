@@ -20,9 +20,10 @@ var div = d3.select("body").append("div")
 
 //дані з короткими url, які відкриваються по кліку на макаронину
 var shortUrlData;
-d3.csv("./data/data2.csv",
+d3.csv("./data/fixedUrlData.csv",
+// d3.csv("./data/data2.csv",
     function(d){
-        return { site: d.site, url: d.url, nonobs: d.nonobs, short_url:d.short_url }
+        return { site: d.site, url: d.url, nonobs: d.nonobs }
     })
     .then( function(dataset) {
         shortUrlData = dataset
@@ -41,18 +42,24 @@ var addLinksMob = function (site) {
         .entries(mobUrls);
 
     $("#mob-urlLinks").find("ul").remove();
+    $("#mob-urlLinks").find("p").remove();
 
     for(var i = 0; i < nested_data.length; i++){
+        d3.select('#mob-urlLinks')
+            .append("p")
+            .html(nested_data[i].key);
+
         var list = d3.select('#mob-urlLinks')
             .append("ul")
-            .style("margin-bottom", "30px")
-            .html(nested_data[i].key);
-        for(var n=0; n < nested_data[i].values.length; n++){
-            list.append("li")
+            .style("margin-bottom", "30px");
+
+        for(var n = 0; n < nested_data[i].values.length; n++){
+            var s = n + 1;
+           list.append("li")
                 .append('a')
-                .attr("href", nested_data[i].values[n].short_url)
+                .attr("href", nested_data[i].values[n].url)
                 .attr("target", "_blank")
-                .html(nested_data[i].values[n].short_url);
+                .html(s);
         }
 
     }
@@ -277,6 +284,8 @@ var main =  function (data){
     data.reverse(); // bad sites first
 
     var media;
+
+
     var boxes = svgContainer.selectAll("g.smallmult")
         .data(data)
         .enter().append("g")
@@ -285,6 +294,7 @@ var main =  function (data){
             var xshift = (i % columns) * width;
             var yshift = ~~(i / columns) * height + 15;
             return "translate(" + xshift + "," + yshift + ")"} )
+
         .on("click", function(d) {
             console.log(this);
             media = d.site;
@@ -292,12 +302,13 @@ var main =  function (data){
             drawNoodle(media);
             div.transition()
                 .duration(500)
-                .style("opacity", 0);
+                .style("display", "none");
 
             if(window.innerWidth < 800) {
                 d3.select("#modal").style("display", "block");
                 addLinksMob(media);
                 d3.select("#firstScreen").style("display", "none");
+                d3.select("#main-page").style("display", "none");
                 $('html,body').animate({
                     scrollTop: $('#modal').offset().top }, 1, "linear");
             } else {
@@ -333,6 +344,7 @@ var main =  function (data){
 
             div.transition()
                 .duration(200)
+                .style("display", "block")
                 .style("opacity", .9);
             div.html(indicator.toLowerCase())
                 .style("left", (d3.event.pageX) + "px")

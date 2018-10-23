@@ -117,7 +117,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                     });
 
                     var urls = myList.map(function (t) {
-                        return t.short_url;
+                        return t.url;
                     });
 
                     // якщо список не порожній, виводимо назву індикатора перед ним
@@ -129,7 +129,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
 
                     //додаємо лінки
                     for (var n = 0; n < urls.length; n++) {
-                        var s = n+1;
+                        var s = n + 1;
                         d3.select('#listOfLinks')
                             .append("li")
                             .append("a")
