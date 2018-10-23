@@ -69,7 +69,7 @@ drawNoodle = function(site) {
 
 
 //The SVG Container
-var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
+var svg = d3.select("#pageChart").insert("svg", "#afterNoodleText")
             .attr("width", chartWidth)
             .attr("height", chartHeight);
 
