@@ -270,6 +270,16 @@ p#modalHint {
     #modalHintArrow {
       display: none; } }
 
+#afterNoodleText {
+  border: 3px solid gold;
+  border-radius: 10px;
+  padding: 4px;
+  font-weight: 600;
+  width: 240px;
+  margin-top: -80px;
+  margin-left: 27px;
+  margin-bottom: 20px; }
+
 #selectedIndicator, #listOfLinks {
   max-width: 100%;
   padding-left: 27px; }
