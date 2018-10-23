@@ -102,6 +102,7 @@ var svg = d3.select("#pageChart").insert("svg", "#selectedIndicator")
                 return d[0] ? lineFunction(d) : '';
             })
             .on("click", function(d) {
+                return; // temporary, by dvrnd
                 if(window.innerWidth >= 800) {
                     d3.select('#selectedIndicator').html('');
                     d3.select('#listOfLinks').html('');
