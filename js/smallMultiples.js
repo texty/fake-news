@@ -20,7 +20,7 @@ var div = d3.select("body").append("div")
 
 //дані з короткими url, які відкриваються по кліку на макаронину
 var shortUrlData;
-d3.csv("./data/fixedUrlData.csv",
+d3.csv("./data/fixedUrlData_23_11.csv",
 // d3.csv("./data/data2.csv",
     function(d){
         return { site: d.site, url: d.url, nonobs: d.nonobs }
